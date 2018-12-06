@@ -13,17 +13,16 @@ namespace WordCounter.Workflows
         public static void Start()
         {
             WordCount wordCount = new WordCount();
-            UserInteraktion ui = new UserInteraktion();
 
             while (true)
             {
-                ui.Start();
+                Ui.Start();
 
-                string text = ui.Bitte_um_Texteingabe();
+                string text = Ui.Bitte_um_Texteingabe();
                 int anzahlWords = wordCount.Count_Words(text);
 
-                ui.Zeige_Anzahl_Woerter(anzahlWords);
-                ui.Warte_und_Neustart();
+                Ui.Zeige_Anzahl_Woerter(anzahlWords);
+                Ui.Warte_und_Neustart();
             }
             
         }

@@ -4,16 +4,11 @@ using WordCounter.Business;
 
 namespace WordCounter.Interaktionen
 {
-    public class UserInteraktion
+    public static class Ui
     {
-        private static bool _isFirstRun;
-
-        public UserInteraktion()
-        {
-            _isFirstRun = true;
-        }
-
-        private void Willkommen()
+        private static bool _isFirstRun = true;
+        
+        private static void Willkommen()
         {
             Meldung(" __          __           _    _____                  _            ");
             Meldung(@" \ \        / /          | |  / ____|                | |           ");
@@ -27,7 +22,7 @@ namespace WordCounter.Interaktionen
             Leerzeile();
         }
 
-        public void Start()
+        public static void Start()
         {
             if (_isFirstRun)
             {
@@ -35,12 +30,12 @@ namespace WordCounter.Interaktionen
             }
         }
 
-        public void Zeige_Anzahl_Woerter(int anzahlWords)
+        public static void Zeige_Anzahl_Woerter(int anzahlWords)
         {
             Meldung($"Anzahl der Wörter: {anzahlWords}");
         }
 
-        public string Bitte_um_Texteingabe()
+        public static string Bitte_um_Texteingabe()
         {
             Meldung_ohne_Umbruch("Bitte geben Sie einen Text ein: ");
             string eingabe = Console.ReadLine();
@@ -48,7 +43,7 @@ namespace WordCounter.Interaktionen
             return eingabe;
         }
 
-        public void Warte_und_Neustart()
+        public static void Warte_und_Neustart()
         {
             _isFirstRun = false;
             Thread.Sleep(3000);
@@ -57,17 +52,17 @@ namespace WordCounter.Interaktionen
             Start();
         }
 
-        private void Leerzeile()
+        private static void Leerzeile()
         {
             Console.WriteLine();
         }
 
-        private void Meldung_ohne_Umbruch(string text)
+        private static void Meldung_ohne_Umbruch(string text)
         {
             Console.Write(text);
         }
 
-        private void Meldung(string text)
+        private static void Meldung(string text)
         {
             Console.WriteLine(text);
         }
