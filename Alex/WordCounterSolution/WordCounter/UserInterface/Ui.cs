@@ -9,6 +9,7 @@ namespace WordCounter.UserInterface
     public class Ui
     {
         private readonly WordCount _businessLogik;
+        private bool _isFirstRun;
 
         public Ui()
         {
@@ -17,10 +18,13 @@ namespace WordCounter.UserInterface
             Words words = new Words();
             StopwordsProvider stopwordsProvider = new StopwordsProvider(pathZuStopwords);
             _businessLogik = new WordCount(words, stopwordsProvider);
+            _isFirstRun = true;
         }
 
         public void Willkommen()
         {
+            
+
             Meldung(" __          __           _    _____                  _            ");
             Meldung(@" \ \        / /          | |  / ____|                | |           ");
             Meldung(@"  \ \  /\  / /__  _ __ __| | | |     ___  _   _ _ __ | |_ ___ _ __ ");
@@ -32,7 +36,10 @@ namespace WordCounter.UserInterface
 
         public void Start()
         {
-            Willkommen();
+            if (_isFirstRun)
+            {
+                Willkommen();
+            }
 
             Meldung("Herzlich Willkommen beim Word-Counter!");
             Meldung("Diese Anwendung zählt die Wörter Ihres eingegeben Textes.");
@@ -49,6 +56,7 @@ namespace WordCounter.UserInterface
 
         public void WarteUndNeustart()
         {
+            _isFirstRun = false;
             Thread.Sleep(3000);
             Console.WriteLine();
             Console.WriteLine();
