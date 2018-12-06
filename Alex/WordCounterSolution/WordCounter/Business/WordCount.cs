@@ -10,12 +10,18 @@ namespace WordCounter.Business
 {
     public class WordCount
     {
-        private Words _words;
-        private StopwordsProvider _stopwordsProvider;
+        private readonly Words _words;
+        private readonly StopwordsProvider _stopwordsProvider;
 
-        public WordCount(Words words, StopwordsProvider stopwordsProvider)
+        public WordCount()
         {
-            _words = words;
+            _words = new Words();
+            _stopwordsProvider = new StopwordsProvider();
+        }
+
+        public WordCount(StopwordsProvider stopwordsProvider)
+        {
+            _words = new Words();
             _stopwordsProvider = stopwordsProvider;
         }
 
@@ -26,7 +32,7 @@ namespace WordCounter.Business
 
             List<string> gefilterteWords = _words.Filter_Stopwords(words, stopwords);
 
-            var result =_words.Count(gefilterteWords);
+            int result =_words.Count(gefilterteWords);
 
             return result;
         }

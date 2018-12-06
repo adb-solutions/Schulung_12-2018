@@ -48,7 +48,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\StopwordsProvider.cs" />
-    <Compile Include="UserInterface\Ui.cs" />
+    <Compile Include="Interaktionen\UserInteraktion.cs" />
+    <Compile Include="Workflows\Workflow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

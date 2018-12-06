@@ -14,7 +14,12 @@ namespace WordCounter.Provider
         public StopwordsProvider(string dateiPfad)
         {
             _dateiPfad = dateiPfad;
-        } 
+        }
+
+        public StopwordsProvider()
+        {
+            _dateiPfad = $"{AppDomain.CurrentDomain.BaseDirectory}\\App_Data\\stopwords.txt";
+        }
 
         public List<string> Read_Stopwords()
         {

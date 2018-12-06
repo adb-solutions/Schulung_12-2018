@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WordCounter.UserInterface;
+using WordCounter.Interaktionen;
+using WordCounter.Workflows;
 
 namespace WordCounter
 {
@@ -11,7 +12,7 @@ namespace WordCounter
     {
         static void Main(string[] args)
         {
-            new Ui().Start();
+            Workflow.Start();
         }
     }
 }

@@ -14,9 +14,7 @@ namespace WordCounter.UnitTests
         [Test]
         public void Lese_StopwordsDatei_Erwarte_Zeilen()
         {
-            string pathZuStopwords = $"{AppDomain.CurrentDomain.BaseDirectory}\\App_Data\\stopwords.txt";
-
-            StopwordsProvider stopwordsProvider = new StopwordsProvider(pathZuStopwords);
+            StopwordsProvider stopwordsProvider = new StopwordsProvider();
             List<string> result = stopwordsProvider.Read_Stopwords();
 
             Assert.That(result, Is.Not.Null);

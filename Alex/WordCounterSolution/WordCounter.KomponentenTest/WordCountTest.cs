@@ -16,12 +16,12 @@ namespace WordCounter.KomponentenTest
     {
         [Test]
         [TestCase("Marry Marry had a little lamb.", 5)]
+        [TestCase("Marry had a little lamb.", 4)]
+        [TestCase("", 0)]
         public void Teste_Marry_Erwarte_Erfolg(string eingabe, int erwartetesErgebnis)
         {
-            string pathZuStopwords = $"{AppDomain.CurrentDomain.BaseDirectory}\\App_Data\\stopwords.txt";
-
             Words words = new Words();
-            StopwordsProvider stopwordsProvider = new StopwordsProvider(pathZuStopwords);
+            StopwordsProvider stopwordsProvider = new StopwordsProvider();
 
             int cntWords = new WordCount(words, stopwordsProvider).Count_Words(eingabe);
 

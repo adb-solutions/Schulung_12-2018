@@ -8,46 +8,23 @@ namespace WordCounter.Operations
 {
     public class Words
     {
-        private char _delimiter_Leerzeichen = ' ';
+        private const char DelimiterLeerzeichen = ' ';
 
         public List<string> Filter_Stopwords(List<string> words, List<string> stopwords)
         {
-            List<string> result = new List<string>();
-
-            if (words != null && words.Any())
-            {
-                foreach (var word in words)
-                {
-                    bool istKeinStopWord = !stopwords.Any(li => li.Equals(word, StringComparison.OrdinalIgnoreCase));
-                    if (istKeinStopWord)
-                    {
-                        result.Add(word);
-                    }
-                }
-            }
-            
-
-            //TODO Mit einem Linq Befehl möglich?
-            //words.Where(word => stopwords.Any(word));
+            List<string> result = words.Except(stopwords).ToList();
 
             return result;
         }
 
         public int Count(List<string> words)
         {
-            int result = 0;
-
-            if (words != null && words.Any())
-            {
-                result = words.Count;
-            }
-
-            return result;
+            return words.Count;
         }
 
         public List<string> Split_into_Words(string text)
         {
-            var result = text.Split(_delimiter_Leerzeichen).Where(word => word != string.Empty).ToList();
+            var result = text.Split(new [] {DelimiterLeerzeichen}, StringSplitOptions.RemoveEmptyEntries).ToList();
             
             return result;
         }
