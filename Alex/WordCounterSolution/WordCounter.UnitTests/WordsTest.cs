@@ -45,6 +45,7 @@ namespace WordCounter.UnitTests
         [TestCase(new string[0], new[] { "a", "the", "on", "off" }, 0)]
         [TestCase(new[] { "a", "the", "on", "off" }, new[] { "a", "the", "on", "off" }, 0)]
         [TestCase(new[] { "Marry", "had", "no", "little", "lamb." }, new[] { "a", "the", "on", "off" }, 5)]
+        [TestCase(new[] { "Marry", "Marry", "had", "no", "little", "lamb." }, new[] { "a", "the", "on", "off" }, 6)]
         [TestCase(new[] { "Marry", "had", "a", "little", "lamb." }, new[] { "a", "the", "on", "off" }, 4)]
         public void Teste_Filter_Stopwords_Erwarte_Erfolg(string[] words, string[] stopwords, int ergebnis)
         {
