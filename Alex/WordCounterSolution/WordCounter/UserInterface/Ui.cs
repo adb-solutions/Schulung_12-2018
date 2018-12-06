@@ -19,13 +19,30 @@ namespace WordCounter.UserInterface
             _businessLogik = new WordCount(words, stopwordsProvider);
         }
 
+        public void Willkommen()
+        {
+            Meldung(" __          __           _    _____                  _            ");
+            Meldung(@" \ \        / /          | |  / ____|                | |           ");
+            Meldung(@"  \ \  /\  / /__  _ __ __| | | |     ___  _   _ _ __ | |_ ___ _ __ ");
+            Meldung(@"   \ \/  \/ / _ \| '__/ _` | | |    / _ \| | | | '_ \| __/ _ \ '__|");
+            Meldung(@"    \  /\  / (_) | | | (_| | | |___| (_) | |_| | | | | ||  __/ |   ");
+            Meldung(@"     \/  \/ \___/|_|  \__,_|  \_____\___/ \__,_|_| |_|\__\___|_|   ");
+            Leerzeile();
+        }
+
         public void Start()
         {
-            MeldungOhneUmbruch("Enter your text: ");
+            Willkommen();
+
+            Meldung("Herzlich Willkommen beim Word-Counter!");
+            Meldung("Diese Anwendung zählt die Wörter Ihres eingegeben Textes.");
+            Leerzeile();
+
+            MeldungOhneUmbruch("Bitte geben Sie einen Text ein: ");
             string text = LeseZeileneingabe();
 
             var anzahlWords = _businessLogik.Count_Words(text);
-            Meldung($"Number of words: {anzahlWords}");
+            Meldung($"Anzahl der Wörter: {anzahlWords}");
 
             WarteUndNeustart();
         }
@@ -36,6 +53,11 @@ namespace WordCounter.UserInterface
             Console.WriteLine();
             Console.WriteLine();
             Start();
+        }
+
+        public void Leerzeile()
+        {
+            Console.WriteLine();
         }
 
         public string LeseZeileneingabe()
