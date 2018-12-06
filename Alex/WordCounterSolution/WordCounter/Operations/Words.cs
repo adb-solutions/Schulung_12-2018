@@ -12,7 +12,22 @@ namespace WordCounter.Operations
 
         public List<string> Filter_Stopwords(List<string> words, List<string> stopwords)
         {
-            List<string> result = words.Except(stopwords).ToList();
+            List<string> result = new List<string>();
+
+            if (words != null && words.Any())
+            {
+                foreach (var word in words)
+                {
+                    bool istKeinStopWord = !stopwords.Any(li => li.Equals(word, StringComparison.OrdinalIgnoreCase));
+                    if (istKeinStopWord)
+                    {
+                        result.Add(word);
+                    }
+                }
+            }
+
+            //TODO: Funktioniert nicht richtig. Filter doppelte
+            //List<string> result = words.Except(stopwords).ToList();
 
             return result;
         }
