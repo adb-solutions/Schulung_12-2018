@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,12 +39,16 @@ namespace CsvViewer.Tests
         }
 
         [Test]
-        [TestCase(new[] { "Datei.csv" }, 1)]
-        [TestCase(new[] { "Datei1.csv", "18" }, 1)]
-        [TestCase(new[] { "Datei2.csv", "5" }, 1)]
-        [TestCase(new[] { "Datei3.csv", "20" }, 1)]
-        public void ErmittlePfad_mitArgument_Erwarte_Ok(string[] args, int a)
+        [TestCase(new[] { "DemoDaten\\Datei1.csv" }, 1)]
+        [TestCase(new[] { "DemoDaten\\Datei1.csv", "18" }, 1)]
+        [TestCase(new[] { "DemoDaten\\Datei2.csv", "5" }, 1)]
+        public void ErmittlePfad_Erwarte_Pfad(string[] args, int a)
         {
+            var x = File.Exists("/Users/UseAlba/Documents/workspace/TFSOnline/Schulung_12-2018/Alex/CsvViewer/CsvViewer.Tests/bin/Debug/DemoDaten/Test.csv");
+            var xx = new FileInfo("/Users/UseAlba/Documents/workspace/TFSOnline/Schulung_12-2018/Alex/CsvViewer/CsvViewer.Tests/bin/Debug/DemoDaten/Test.csv");
+
+
+
             var verarbeiter = new ArgumentVerarbeiter();
             var result = verarbeiter.Ermittle_Pfad(args);
 
@@ -51,13 +56,15 @@ namespace CsvViewer.Tests
         }
 
         [Test]
-        [TestCase(new [] { "Datei.csv" }, 1)]
-        public void ErmittlePfad_ohneArgument_Erwarte_Standardlaenge(string[] args, int a)
+        [TestCase(new[] { "Unbekannt.csv" }, 1)]
+        public void ErmittlePfad_KeineDatei_Erwarte_Exception(string[] args, int a)
         {
             var verarbeiter = new ArgumentVerarbeiter();
-            var result = verarbeiter.Ermittle_Pfad(args);
 
-            Assert.That(result, Is.EqualTo(Konstanten.StandardSeitenlaenge));
+            Assert.Throws(typeof(FileNotFoundException), 
+            code: () => {
+                var result = verarbeiter.Ermittle_Pfad(args);
+            });
         }
     }
 }
