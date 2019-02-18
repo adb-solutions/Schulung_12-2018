@@ -14,6 +14,8 @@ namespace CsvViewer.Business
             string pfad = Ermittle_Pfad(args);
             int seitenlaenge = Ermittle_Seitenlaenge(args);
 
+            Status.Instanz.Seitenlaenge.Setze(seitenlaenge);
+
             return pfad;
         }
 
