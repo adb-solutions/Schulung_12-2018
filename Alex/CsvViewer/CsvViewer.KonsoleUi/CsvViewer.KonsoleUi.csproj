@@ -47,9 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Test.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="DemoDaten\besucher.csv" />
+    <None Include="DemoDaten\leer.csv" />
+    <None Include="DemoDaten\personen.csv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CsvViewer.Business\CsvViewer.Business.csproj">
@@ -64,6 +64,9 @@
       <Project>{cef2ec71-af7d-4439-ae9a-8cd94b173cb3}</Project>
       <Name>CsvViewer.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DemoDaten\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

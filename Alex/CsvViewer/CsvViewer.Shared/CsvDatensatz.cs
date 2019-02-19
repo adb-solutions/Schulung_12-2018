@@ -9,5 +9,15 @@ namespace CsvViewer.Shared
     public class CsvDatensatz
     {
         public List<string> Werte { get; set; } = new List<string>();
+
+        public CsvDatensatz()
+        {
+
+        }
+
+        public CsvDatensatz(List<string> werte)
+        {
+            Werte = werte;
+        }
     }
 }

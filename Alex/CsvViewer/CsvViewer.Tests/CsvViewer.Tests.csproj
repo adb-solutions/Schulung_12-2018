@@ -48,6 +48,10 @@
   <ItemGroup>
     <Compile Include="ArgumentVerarbeiterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DateiBereitstellerTests.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="CsvParserTests.cs" />
+    <Compile Include="InteraktionenTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CsvViewer.Business\CsvViewer.Business.csproj">
@@ -64,20 +68,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DemoDaten\Datei2.csv">
+    <None Include="packages.config" />
+    <None Include="DemoDaten\besucher.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
-    <None Include="DemoDaten\Datei1.csv">
+    <None Include="DemoDaten\leer.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoDaten\personen.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="DemoDaten\Test.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
