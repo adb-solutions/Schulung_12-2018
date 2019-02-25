@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,60 +15,86 @@ namespace CsvViewer.Tests
     public class ArgumentVerarbeiterTests : TestBase
     {
         [Test]
-        [TestCase(new [] { "DemoDaten\\besucher.csv" }, Konstanten.StandardSeitenlaenge)]
-        [TestCase(new [] { "DemoDaten\\besucher.csv", "18" }, 18)]
-        [TestCase(new [] { "DemoDaten\\personen.csv", "5" }, 5)]
-        [TestCase(new [] { "DemoDaten\\leer.csv", "20" }, 20)]
-        public void Integration_Lese_Eingabeparameter_mitArgument_Erwarte_Erfolg(string[] args, int sollLaenge)
+        [TestCaseSource(nameof(TestCases_Lese_Eingabeparameter_mitArgument))]
+        public void Lese_Eingabeparameter_mitArgument_Erwarte_Erfolg(string[] args, int sollLaenge)
         {
             var verarbeiter = new ArgumentVerarbeiter();
             var result = verarbeiter.Lese_Eingabeparameter(args);
             
             var dir = Path.GetDirectoryName(typeof(ArgumentVerarbeiterTests).Assembly.Location);
-            Assert.That(result, Is.EqualTo($"{dir}\\{args[0]}"));
+            Assert.That(result, Is.EqualTo($"{dir}{Path.DirectorySeparatorChar}{args[0]}"));
 
             Assert.That(Status.Instanz.Seitenlaenge.Lade(), Is.EqualTo(sollLaenge));
         }
 
-        [Test]
-        [TestCase(new [] { "DemoDaten\\besucher.csv" }, 1)]
-        [TestCase(new [] { "DemoDaten\\personen.csv" }, 1)]
-        [TestCase(new [] { "DemoDaten\\leer.csv" }, 1)]
-        public void Integration_Lese_Eingabeparameter_ohneArgument_Erwarte_Erfolg(string[] args, int a)
+        public static IEnumerable TestCases_Lese_Eingabeparameter_mitArgument
         {
-            var verarbeiter = new ArgumentVerarbeiter();
-            var result = verarbeiter.Lese_Eingabeparameter(args);
-            
-            var dir = Path.GetDirectoryName(typeof(ArgumentVerarbeiterTests).Assembly.Location);
-            Assert.That(result, Is.EqualTo($"{dir}\\{args[0]}"));
-
-            Assert.That(Status.Instanz.Seitenlaenge.Lade(), Is.EqualTo(Konstanten.StandardSeitenlaenge));
-
+            get
+            {
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}besucher.csv" }, Konstanten.StandardSeitenlaenge);
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}besucher.csv", "18" }, 18);
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "5" }, 5);
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}leer.csv", "20" }, 20);
+            }
         }
 
         [Test]
-        [TestCase(new[] { "DemoDaten\\besucher.csv" }, 1)]
-        [TestCase(new[] { "DemoDaten\\besucher.csv", "18" }, 1)]
-        [TestCase(new[] { "DemoDaten\\personen.csv", "5" }, 1)]
+        [TestCaseSource(nameof(TestCases_Lese_Eingabeparameter_ohneArgument))]
+        public void Lese_Eingabeparameter_ohneArgument_Erwarte_Erfolg(string[] args, int a)
+        {
+            var verarbeiter = new ArgumentVerarbeiter();
+            var result = verarbeiter.Lese_Eingabeparameter(args);
+
+            var dir = Path.GetDirectoryName(typeof(ArgumentVerarbeiterTests).Assembly.Location);
+            Assert.That(result, Is.EqualTo($"{dir}{Path.DirectorySeparatorChar}{args[0]}"));
+
+            Assert.That(Status.Instanz.Seitenlaenge.Lade(), Is.EqualTo(Konstanten.StandardSeitenlaenge));
+        }
+
+        public static IEnumerable TestCases_Lese_Eingabeparameter_ohneArgument
+        {
+            get
+            {
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}besucher.csv" }, 1);
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv" }, 1);
+                yield return new TestCaseData(new[] { $"DemoDaten{Path.DirectorySeparatorChar}leer.csv" }, 1);
+            }
+        }
+
+
+        [Test]
+        [TestCaseSource(nameof(TestCases_ErmittlePfad))]
         public void ErmittlePfad_Erwarte_Pfad(string[] args, int a)
         {
             var verarbeiter = new ArgumentVerarbeiter();
             var result = verarbeiter.Ermittle_Pfad(args);
 
             var dir = Path.GetDirectoryName(typeof(ArgumentVerarbeiterTests).Assembly.Location);
-            Assert.That(result, Is.EqualTo($"{dir}\\{args[0]}"));
+            Assert.That(result, Is.EqualTo($"{dir}{Path.DirectorySeparatorChar}{args[0]}"));
+        }
+
+        public static IEnumerable TestCases_ErmittlePfad
+        {
+            get
+            {
+                yield return new TestCaseData(new string[] { $"DemoDaten{Path.DirectorySeparatorChar}besucher.csv" }, 1);
+                yield return new TestCaseData(new string[] { $"DemoDaten{Path.DirectorySeparatorChar}besucher.csv", "18" }, 1);
+                yield return new TestCaseData(new string[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "5" }, 1);
+            }
         }
 
         [Test]
-        [TestCase(new[] { "Unbekannt.csv" }, 1)]
-        public void ErmittlePfad_KeineDatei_Erwarte_Exception(string[] args, int a)
+        [TestCase(new[] { "Unbekannt.csv" }, "Datei Unbekannt.csv nicht gefunden.")]
+        public void ErmittlePfad_KeineDatei_Erwarte_Exception(string[] args, string erwartet)
         {
             var verarbeiter = new ArgumentVerarbeiter();
 
-            Assert.Throws(typeof(FileNotFoundException), 
-            code: () => {
+            Exception ex = Assert.Throws(typeof(FileNotFoundException),
+            () =>
+            {
                 var result = verarbeiter.Ermittle_Pfad(args);
             });
+            Assert.That(ex.Message, Is.EqualTo(erwartet));
         }
     }
 }

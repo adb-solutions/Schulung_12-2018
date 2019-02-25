@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CsvViewer.Business
 {
-    public class Konstanten
+    public static class Konstanten
     {
         public const int StandardSeitenlaenge = 10;
     }
