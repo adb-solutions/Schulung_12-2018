@@ -1,83 +1,84 @@
 ﻿using System;
+using System.Threading;
 using CsvViewer.Business;
 
 namespace CsvViewer.KonsoleUi
 {
     public class App
     {
+        public event EventHandler<string[]> Start;
+        public event EventHandler NaechsteSeite;
+        public event EventHandler VorherigeSeite;
+        public event EventHandler ErsteSeite;
+        public event EventHandler LetzteSeite;
+        public event EventHandler Exit;
+
         private string[] _args;
-        private Ui ui;
+        private Ui _ui;
 
         public App(string[] args)
         {
             _args = args;
         }
 
-        public void Start()
+        public void Run()
         {
             Init();
-            ui.Run(_args);
+            Main(_args);
+        }
+        
+        private void Main(string[] args)
+        {
+            Start.Invoke(_ui, args);
+
+            bool isRunning = true;
+            while (isRunning)
+            {
+                _ui.Zeige_Auswahl_Moeglichkeiten();
+                var key = _ui.Lese_Zeichen();
+                
+                switch (key)
+                {
+                    case "N":
+                        NaechsteSeite.Invoke(_ui, EventArgs.Empty);
+                        break;
+
+                    case "P":
+                        VorherigeSeite.Invoke(_ui, EventArgs.Empty);
+                        break;
+
+                    case "F":
+                        ErsteSeite.Invoke(_ui, EventArgs.Empty);
+                        break;
+
+                    case "L":
+                        LetzteSeite.Invoke(_ui, EventArgs.Empty);
+                        break;
+
+                    case "X":
+                        Exit.Invoke(_ui, EventArgs.Empty);
+                        isRunning = false;
+                        break;
+
+                    default:
+                        _ui.Zeige_Fehler("Ihre Eingabe wurde nicht erkannt.\r\nBitte versuchen Sie es erneut.");
+                        ErsteSeite.Invoke(_ui, EventArgs.Empty);
+                        break;
+                }
+            }
         }
 
         private void Init()
         {
-            ui = new Ui();
-
-            ui.Start += Ui_Start;
-            ui.ErsteSeite += Ui_ErsteSeite;
-            ui.LetzteSeite += Ui_LetzteSeite;
-            ui.NaechsteSeite += Ui_NaechsteSeite;
-            ui.VorherigeSeite += Ui_VorherigeSeite;
-            ui.Exit += Ui_Exit;
-        }
-
-        void Ui_Exit(object sender, EventArgs e)
-        {
-        }
-
-
-        void Ui_VorherigeSeite(object sender, EventArgs e)
-        {
-            Interaktionen interaktionen = new Interaktionen();
-            var csvDatensaetze = interaktionen.Vorherige_Seite();
-
-            ((Ui)sender).Zeige_CsvDatensaetze(csvDatensaetze);
-        }
-
-
-        void Ui_NaechsteSeite(object sender, EventArgs e)
-        {
-            Interaktionen interaktionen = new Interaktionen();
-            var csvDatensaetze = interaktionen.Naechste_Seite();
-
-            ((Ui)sender).Zeige_CsvDatensaetze(csvDatensaetze);
-        }
-
-
-        void Ui_LetzteSeite(object sender, EventArgs e)
-        {
-            Interaktionen interaktionen = new Interaktionen();
-            var csvDatensaetze = interaktionen.Letzte_Seite();
-
-            ((Ui)sender).Zeige_CsvDatensaetze(csvDatensaetze);
-        }
-
-
-        void Ui_ErsteSeite(object sender, EventArgs e)
-        {
-            Interaktionen interaktionen = new Interaktionen();
-            var csvDatensaetze = interaktionen.Erste_Seite();
-
-            ((Ui)sender).Zeige_CsvDatensaetze(csvDatensaetze);
-        }
-
-
-        private void Ui_Start(object sender, string[] e)
-        {
-            Interaktionen interaktionen = new Interaktionen();
-            var csvDatensaetze = interaktionen.Start(e);
-
-            ((Ui)sender).Zeige_CsvDatensaetze(csvDatensaetze);
+            _ui = new Ui();
+            UiEvents events = new UiEvents(new Interaktionen());
+            
+            Start += events.Ui_Start;
+            ErsteSeite += events.Ui_ErsteSeite;
+            LetzteSeite += events.Ui_LetzteSeite;
+            NaechsteSeite += events.Ui_NaechsteSeite;
+            VorherigeSeite += events.Ui_VorherigeSeite;
+            Exit += events.Ui_Exit;
         }
     }
 }

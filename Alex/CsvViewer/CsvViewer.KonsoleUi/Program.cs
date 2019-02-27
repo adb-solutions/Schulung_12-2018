@@ -12,9 +12,9 @@ namespace CsvViewer.KonsoleUi
     {
         static void Main(string[] args)
         {
-            var debug = new string[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "5" };
+            var debug = new string[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "15" };
             App app = new App(debug);  //new App(args);
-            app.Start();
+            app.Run();
         }
     }
 }

@@ -1,55 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using CsvViewer.Shared;
 
 namespace CsvViewer.KonsoleUi
 {
     public class Ui
     {
-        public event EventHandler<string[]> Start;
-        public event EventHandler NaechsteSeite;
-        public event EventHandler VorherigeSeite;
-        public event EventHandler ErsteSeite;
-        public event EventHandler LetzteSeite;
-        public event EventHandler Exit;
-
-        public void Run(string[] args)
-        {
-            Start.Invoke(this, args);
-
-            bool isRunning = true;
-            while(isRunning)
-            {
-                Zeige_Auswahl_Moeglichkeiten();
-                var key = Console.ReadKey();
-
-                switch (key.ToString().ToUpper())
-                {
-                    case "N":
-                        NaechsteSeite.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "P":
-                        VorherigeSeite.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "F":
-                        VorherigeSeite.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "L":
-                        VorherigeSeite.Invoke(this, EventArgs.Empty);
-                        break;
-
-                    case "X":
-                        Exit.Invoke(this, EventArgs.Empty);
-                        isRunning = false;
-                        break;
-                }
-            }
-        }
-
         public void Zeige_CsvDatensaetze(List<CsvDatensatz> csvDatensaetze)
         {
             List<int> spaltenBreiten = ErmittleSpaltenBreiten(csvDatensaetze);
@@ -80,9 +38,9 @@ namespace CsvViewer.KonsoleUi
             {
                 var inhalt = kopfzeile.Werte.ElementAt(i);
                 int breite = spaltenBreiten.ElementAt(i);
-
-                ausgabe = $"{inhalt.PadLeft(inhalt.Count() - breite, ' ')}|";
-                ausgabeBottom = $"{"".PadLeft(breite, '-')}+";
+                
+                ausgabe += $"{inhalt.PadRight(breite, ' ')}|";
+                ausgabeBottom += $"{"".PadRight(breite, '-')}+";
             }
 
             Console.WriteLine(ausgabe);
@@ -99,15 +57,45 @@ namespace CsvViewer.KonsoleUi
                 {
                     var inhalt = eintrag.Werte.ElementAt(i);
                     int breite = spaltenBreiten.ElementAt(i);
-
-                    ausgabe = $"{inhalt.PadLeft(inhalt.Count() - breite, ' ')}|";
+                    
+                    ausgabe += $"{inhalt.PadRight(breite, ' ')}|";
                 }
 
                 Console.WriteLine(ausgabe);
             }
         }
 
-        private void Zeige_Auswahl_Moeglichkeiten()
+        public string Lese_Zeichen()
+        {
+            var key = Console.ReadKey();
+            Console.Clear();
+            var result = key.KeyChar.ToString().ToUpper();
+
+            return result;
+        }
+
+        public void Zeige_Hinweis(string nachricht)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine(nachricht);
+            
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void Zeige_Fehler(string nachricht)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.WriteLine(nachricht);
+            Thread.Sleep(2000);
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.Clear();
+        }
+
+        public void Zeige_Auswahl_Moeglichkeiten()
         {
             List<string> moeglichkeiten = new List<string>();
             moeglichkeiten.Add("N(ext page");
