@@ -13,29 +13,6 @@ namespace CsvViewer.Business
 
         public IEnumerable<CsvDatensatz> Zerlege_Csv_in_CsvDatensaetze(List<string> zeilen)
         {
-            //Lange Variante via foreach
-            /*
-            List<CsvDatensatz> result = new List<CsvDatensatz>();
-            foreach(var zeile in zeilen)
-            {
-                var werte = zeile.Split(CsvParser.CsvDelimiter);
-
-                CsvDatensatz datensatz = new CsvDatensatz(werte.ToList());
-                result.Add(datensatz);
-            }
-            */
-
-            //Lange Variante via yield return
-            /*
-            foreach(var zeile in zeilen)
-            {
-                var werte = zeile.Split(CsvParser.CsvDelimiter);
-
-                CsvDatensatz datensatz = new CsvDatensatz(werte.ToList());
-                yield return datensatz;
-            }
-            */
-
             //Kurzvariante via LINQ
             IEnumerable<CsvDatensatz> result =  zeilen.Select(zeile => 
                                                 new CsvDatensatz(
@@ -44,5 +21,34 @@ namespace CsvViewer.Business
                                             );
             return result;
         }
+
+        /*
+        public IEnumerable<CsvDatensatz> Zerlege_Csv_in_CsvDatensaetze(List<string> zeilen)
+        {
+            //Lange Variante via yield return
+            foreach(var zeile in zeilen)
+            {
+                var werte = zeile.Split(CsvParser.CsvDelimiter);
+
+                CsvDatensatz datensatz = new CsvDatensatz(werte.ToList());
+                yield return datensatz;
+            }
+        }
+
+        public IEnumerable<CsvDatensatz> Zerlege_Csv_in_CsvDatensaetze(List<string> zeilen)
+        {
+            //Lange Variante via foreach
+            List<CsvDatensatz> result = new List<CsvDatensatz>();
+            foreach(var zeile in zeilen)
+            {
+                var werte = zeile.Split(CsvParser.CsvDelimiter);
+
+                CsvDatensatz datensatz = new CsvDatensatz(werte.ToList());
+                result.Add(datensatz);
+            }
+
+            return result;
+        }
+        */
     }
 }

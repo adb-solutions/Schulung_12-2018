@@ -12,14 +12,9 @@ namespace CsvViewer.KonsoleUi
     {
         static void Main(string[] args)
         {
-            var x = File.Exists("Test.csv");
-            var xx = new FileInfo("Test.csv");
-
-            //string pfad = Path.GetFullPath("Test.csv");
-            //Console.WriteLine(pfad);
-
-            Console.WriteLine("hi");
-            Console.ReadKey();
+            var debug = new string[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "5" };
+            App app = new App(debug);  //new App(args);
+            app.Start();
         }
     }
 }
