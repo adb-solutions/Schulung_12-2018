@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvViewer.KonsoleUi", "CsvViewer.KonsoleUi\CsvViewer.KonsoleUi.csproj", "{47F1C40E-0F07-49F1-B470-3FA15559A2F2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvViewer.Tests", "CsvViewer.Tests\CsvViewer.Tests.csproj", "{88832070-F767-42D1-B747-76C12BB7DD68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvViewer.Business", "CsvViewer.Business\CsvViewer.Business.csproj", "{A7CA2E86-427E-4163-A9E2-C7664A0EF43A}"
@@ -13,16 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvViewer.Persistence", "Cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvViewer.Shared", "CsvViewer.Shared\CsvViewer.Shared.csproj", "{CEF2EC71-AF7D-4439-AE9A-8CD94B173CB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvViewer.KonsolenUi", "CsvViewer.KonsolenUi\CsvViewer.KonsolenUi.csproj", "{5B980BB9-1C04-42B6-9343-850B8E341BE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{47F1C40E-0F07-49F1-B470-3FA15559A2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47F1C40E-0F07-49F1-B470-3FA15559A2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47F1C40E-0F07-49F1-B470-3FA15559A2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47F1C40E-0F07-49F1-B470-3FA15559A2F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88832070-F767-42D1-B747-76C12BB7DD68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88832070-F767-42D1-B747-76C12BB7DD68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88832070-F767-42D1-B747-76C12BB7DD68}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{CEF2EC71-AF7D-4439-AE9A-8CD94B173CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEF2EC71-AF7D-4439-AE9A-8CD94B173CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEF2EC71-AF7D-4439-AE9A-8CD94B173CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B980BB9-1C04-42B6-9343-850B8E341BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B980BB9-1C04-42B6-9343-850B8E341BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B980BB9-1C04-42B6-9343-850B8E341BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B980BB9-1C04-42B6-9343-850B8E341BE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

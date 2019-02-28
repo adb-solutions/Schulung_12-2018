@@ -2,7 +2,7 @@
 using System.Threading;
 using CsvViewer.Business;
 
-namespace CsvViewer.KonsoleUi
+namespace CsvViewer.KonsolenUi
 {
     public class App
     {

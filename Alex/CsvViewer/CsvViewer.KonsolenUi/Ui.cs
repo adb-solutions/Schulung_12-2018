@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using CsvViewer.Shared;
 
-namespace CsvViewer.KonsoleUi
+namespace CsvViewer.KonsolenUi
 {
     public class Ui
     {
