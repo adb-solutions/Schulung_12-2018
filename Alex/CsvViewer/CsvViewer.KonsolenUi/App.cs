@@ -15,6 +15,7 @@ namespace CsvViewer.KonsolenUi
 
         private string[] _args;
         private Ui _ui;
+        private bool _isRunning = true;
 
         public App(string[] args)
         {
@@ -24,7 +25,8 @@ namespace CsvViewer.KonsolenUi
         public void Run()
         {
             Init();
-            Main(_args);
+            OnStart(_args);
+            Main();
         }
         
         private void Init()
@@ -40,45 +42,78 @@ namespace CsvViewer.KonsolenUi
             Exit += events.Ui_Exit;
         }
 
-        private void Main(string[] args)
+        private void Main()
         {
-            Start(_ui, args);
-
-            bool isRunning = true;
-            while (isRunning)
+            while (_isRunning)
             {
                 _ui.Zeige_Auswahl_Moeglichkeiten();
-                var key = _ui.Lese_Zeichen();
-                
+
+                string key = _ui.Lese_Zeichen();
                 switch (key)
                 {
                     case "N":
-                        NaechsteSeite(_ui, EventArgs.Empty);
+                        OnNaechsteSeite();
                         break;
 
                     case "P":
-                        VorherigeSeite(_ui, EventArgs.Empty);
+                        OnVorherigeSeite();
                         break;
 
                     case "F":
-                        ErsteSeite(_ui, EventArgs.Empty);
+                        OnErsteSeite();
                         break;
 
                     case "L":
-                        LetzteSeite(_ui, EventArgs.Empty);
+                        OnLetzteSeite();
                         break;
 
                     case "X":
-                        Exit(_ui, EventArgs.Empty);
-                        isRunning = false;
+                        OnExit();
+                        
                         break;
 
                     default:
-                        _ui.Zeige_Fehler("Ihre Eingabe wurde nicht erkannt.\r\nBitte versuchen Sie es erneut.");
-                        ErsteSeite(_ui, EventArgs.Empty);
+                        OnEingabeNichtErkannt();
                         break;
                 }
             }
+        }
+
+        private void OnStart(string[] args)
+        {
+            Start?.Invoke(_ui, args);
+        }
+
+        protected virtual void OnEingabeNichtErkannt()
+        {
+            _ui.Zeige_Fehler("Ihre Eingabe wurde nicht erkannt.\r\nBitte versuchen Sie es erneut.");
+            OnErsteSeite();
+        }
+
+        protected virtual void OnExit()
+        {
+            _isRunning = false;
+            Exit?.Invoke(_ui, EventArgs.Empty);
+        }
+
+        protected virtual void OnLetzteSeite()
+        {
+            LetzteSeite?.Invoke(_ui, EventArgs.Empty);
+        }
+
+        protected virtual void OnErsteSeite()
+        {
+            ErsteSeite?.Invoke(_ui, EventArgs.Empty);
+        }
+
+        protected virtual void OnVorherigeSeite()
+        {
+            VorherigeSeite?.Invoke(_ui, EventArgs.Empty);
+        }
+
+        protected virtual void OnNaechsteSeite()
+        {
+            NaechsteSeite?.Invoke(_ui, EventArgs.Empty);
         }
 
     }

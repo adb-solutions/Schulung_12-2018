@@ -7,8 +7,11 @@ namespace CsvViewer.KonsolenUi
     {
         static void Main(string[] args)
         {
-            var debug = new string[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "15" };
-            App app = new App(debug);  //new App(args);
+#if DEBUG
+            args = new string[] { $"DemoDaten{Path.DirectorySeparatorChar}personen.csv", "15" };
+#endif
+
+            App app = new App(args);
             app.Run();
         }
     }
