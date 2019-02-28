@@ -45,6 +45,17 @@ namespace CsvViewer.Tests
                                         };
 
         [Test]
+        [TestCase(3, 7)]
+        [TestCase(4, 5)]
+        public void Ermittle_Seitennummer_Letzte_Seite_Erwarte_Erfolg(int seitenlaenge, int erwartet)
+        {
+            var seitenBereitsteller = new SeitenBereitsteller();
+            int result = seitenBereitsteller.Ermittle_Seitennummer_Letzte_Seite(demoDaten, seitenlaenge);
+
+            Assert.That(result, Is.EqualTo(erwartet));
+        }
+
+        [Test]
         public void Filtere_Seite_innerhalb_des_Geltungsbereich_Erwarte_konkrete_Elemente()
         {
             var seitenBereitsteller = new SeitenBereitsteller();

@@ -35,7 +35,20 @@ namespace CsvViewer.Business
 
         public int Ermittle_Seitennummer_Letzte_Seite(List<CsvDatensatz> alleCsvDatensaetze, int seitenlaenge)
         {
-            throw new NotImplementedException();
+            if (alleCsvDatensaetze == null || !alleCsvDatensaetze.Any())
+            {
+                throw new ArgumentException("Es wurden keine Datensätze übermittelt.");
+            }
+
+            int anzahlInhalt = (alleCsvDatensaetze.Count - 1);
+            int letzteSeite = (anzahlInhalt / seitenlaenge);
+            int rest = (anzahlInhalt % seitenlaenge);
+            if (rest > 0)
+            {
+                letzteSeite++;
+            }
+
+            return letzteSeite;
         }
 
         public List<CsvDatensatz> Filtere_Seite(List<CsvDatensatz> alleCsvDatensaetze, int seitenlaenge, int gewuenschteSeite)
