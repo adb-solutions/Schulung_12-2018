@@ -27,9 +27,22 @@ namespace CsvViewer.KonsolenUi
             Main(_args);
         }
         
+        private void Init()
+        {
+            _ui = new Ui();
+            UiEvents events = new UiEvents(new Interaktionen());
+
+            Start += events.Ui_Start;
+            ErsteSeite += events.Ui_ErsteSeite;
+            LetzteSeite += events.Ui_LetzteSeite;
+            NaechsteSeite += events.Ui_NaechsteSeite;
+            VorherigeSeite += events.Ui_VorherigeSeite;
+            Exit += events.Ui_Exit;
+        }
+
         private void Main(string[] args)
         {
-            Start.Invoke(_ui, args);
+            Start(_ui, args);
 
             bool isRunning = true;
             while (isRunning)
@@ -40,45 +53,33 @@ namespace CsvViewer.KonsolenUi
                 switch (key)
                 {
                     case "N":
-                        NaechsteSeite.Invoke(_ui, EventArgs.Empty);
+                        NaechsteSeite(_ui, EventArgs.Empty);
                         break;
 
                     case "P":
-                        VorherigeSeite.Invoke(_ui, EventArgs.Empty);
+                        VorherigeSeite(_ui, EventArgs.Empty);
                         break;
 
                     case "F":
-                        ErsteSeite.Invoke(_ui, EventArgs.Empty);
+                        ErsteSeite(_ui, EventArgs.Empty);
                         break;
 
                     case "L":
-                        LetzteSeite.Invoke(_ui, EventArgs.Empty);
+                        LetzteSeite(_ui, EventArgs.Empty);
                         break;
 
                     case "X":
-                        Exit.Invoke(_ui, EventArgs.Empty);
+                        Exit(_ui, EventArgs.Empty);
                         isRunning = false;
                         break;
 
                     default:
                         _ui.Zeige_Fehler("Ihre Eingabe wurde nicht erkannt.\r\nBitte versuchen Sie es erneut.");
-                        ErsteSeite.Invoke(_ui, EventArgs.Empty);
+                        ErsteSeite(_ui, EventArgs.Empty);
                         break;
                 }
             }
         }
 
-        private void Init()
-        {
-            _ui = new Ui();
-            UiEvents events = new UiEvents(new Interaktionen());
-            
-            Start += events.Ui_Start;
-            ErsteSeite += events.Ui_ErsteSeite;
-            LetzteSeite += events.Ui_LetzteSeite;
-            NaechsteSeite += events.Ui_NaechsteSeite;
-            VorherigeSeite += events.Ui_VorherigeSeite;
-            Exit += events.Ui_Exit;
-        }
     }
 }

@@ -32,7 +32,7 @@ namespace CsvViewer.KonsolenUi
                 ((Ui)sender).Zeige_Hinweis("Es wird bereits die erste Seite angezeigt.\r\nBitte wählen Sie eine andere Option.");
             }
         }
-        
+
         public void Ui_NaechsteSeite(object sender, EventArgs e)
         {
             var csvDatensaetze = _interaktionen.Naechste_Seite();
