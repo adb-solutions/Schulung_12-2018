@@ -19,15 +19,10 @@ namespace CsvViewer.Business
             return pfad;
         }
 
+        //verschieben in Dateibereitsteller
         internal string Ermittle_Pfad(string[] args)
         {
             string pfad = Path.GetFullPath(args[0]);
-
-            bool dateiNichtGefunden = !File.Exists(pfad);
-            if(dateiNichtGefunden)
-            {
-                throw new FileNotFoundException($"Datei {args[0]} nicht gefunden.");
-            }
 
             return pfad;
         }

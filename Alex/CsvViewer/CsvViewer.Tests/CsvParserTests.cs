@@ -32,6 +32,8 @@ namespace CsvViewer.Tests
             string[] sarray = { "a", "b", "c" };
             Assert.That(new string[] { "c", "a", "b" }, Is.EquivalentTo(sarray));
 
+            //TIPP: CollectionAssert.AreEqual
+            //Nuget von Ralf: Equalidator
             for(int i = 0; i < result.Count; i++)
             {
                 var erwartet = erwarte[i].Werte.ToArray();
