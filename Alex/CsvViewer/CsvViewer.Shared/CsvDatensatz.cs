@@ -10,6 +10,7 @@ namespace CsvViewer.Shared
     {
         public List<string> Werte { get; set; } = new List<string>();
 
+        //raus
         public CsvDatensatz()
         {
 

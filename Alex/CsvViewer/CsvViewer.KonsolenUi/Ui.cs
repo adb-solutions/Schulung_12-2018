@@ -97,12 +97,14 @@ namespace CsvViewer.KonsolenUi
 
         public void Zeige_Auswahl_Moeglichkeiten()
         {
-            List<string> moeglichkeiten = new List<string>();
-            moeglichkeiten.Add("N(ext page");
-            moeglichkeiten.Add("P(revious page");
-            moeglichkeiten.Add("F(irst page");
-            moeglichkeiten.Add("L(ast page");
-            moeglichkeiten.Add("eX(it");
+            var moeglichkeiten = new List<string>
+            {
+                "N(ext page",
+                "P(revious page",
+                "F(irst page",
+                "L(ast page",
+                "eX(it"
+            };
 
             Console.WriteLine(string.Join(", ", moeglichkeiten));
         }
