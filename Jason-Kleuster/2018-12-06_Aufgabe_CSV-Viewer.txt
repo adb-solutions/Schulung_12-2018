@@ -1,0 +1,5 @@
+https://ccd-school.de/wdingdojo
+
+AgilityKatas
+- wordcount
+Iteration 1/2/3

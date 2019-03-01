@@ -1,0 +1,17 @@
+LOCcount (LOC -> lines of code)
+---
+
+$loccount c:\code
+c:\code\Porgramm.cs 123, 100
+c:\code\Projekt1\Program.cs 234, 201
+...
+
+Total:
+  lines 10.000
+  LOC 9.000
+
+LOC nicht
+- Leerzeilen (inklusive Whitespace)
+- {whitespace} //
+
+############################################################
