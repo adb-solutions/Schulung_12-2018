@@ -1,0 +1,14 @@
+20. Mai
+Übungsaufgabe Haushaltshandbuch
+https://ccd-school.de/coding-dojo
+ohne Variation
+
+
+
+                                  ------
+              |-------> Y ------> |    |
+              |                   |    |
+---(arg*)---> X ------> Y ------> | UI |
+              |                   |    |
+              |-------> Y ------> |    |
+                                  ------
