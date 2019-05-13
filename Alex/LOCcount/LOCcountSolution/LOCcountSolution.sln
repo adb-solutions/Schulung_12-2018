@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LOCcount", "LOCcount\LOCcount.csproj", "{A49DB166-C076-4754-84E5-5D5E7B4529DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LOCcount.Business", "LOCcount.Business\LOCcount.Business.csproj", "{52D1D9B0-A6F5-466F-B0BA-3B14EB2234EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A49DB166-C076-4754-84E5-5D5E7B4529DD}.Debug|x86.ActiveCfg = Debug|x86
+		{A49DB166-C076-4754-84E5-5D5E7B4529DD}.Debug|x86.Build.0 = Debug|x86
+		{A49DB166-C076-4754-84E5-5D5E7B4529DD}.Release|x86.ActiveCfg = Release|x86
+		{A49DB166-C076-4754-84E5-5D5E7B4529DD}.Release|x86.Build.0 = Release|x86
+		{52D1D9B0-A6F5-466F-B0BA-3B14EB2234EA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52D1D9B0-A6F5-466F-B0BA-3B14EB2234EA}.Debug|x86.Build.0 = Debug|Any CPU
+		{52D1D9B0-A6F5-466F-B0BA-3B14EB2234EA}.Release|x86.ActiveCfg = Release|Any CPU
+		{52D1D9B0-A6F5-466F-B0BA-3B14EB2234EA}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

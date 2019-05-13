@@ -1,5 +1,5 @@
 ﻿using System;
-namespace LOCcount
+namespace LOCcount.Business
 {
     public class ArgumentVerarbeiter
     {
