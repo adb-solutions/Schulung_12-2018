@@ -4,21 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Haushaltsbuch
+namespace FlowDesign.Ui
 {
-    class BenutzerInteraktion
+    public class Ausgabe
     {
-        private static bool _isFirstRun = true;
-
-        public static void Aufruf()
+        static private bool _erstmaligeAusfuehrung = true;
+        public void Start()
         {
-            if (_isFirstRun)
+            if (_erstmaligeAusfuehrung)
             {
                 Willkommen();
             }
         }
 
-        public static void Willkommen()
+        static private void Willkommen()
         {
             Console.WriteLine("Haushaltsbuch");
             Console.WriteLine("_____________");
@@ -29,20 +28,13 @@ namespace Haushaltsbuch
             Console.WriteLine("Kategorie");
             Console.WriteLine("Beschreibung");
             Console.WriteLine("------------");
-            _isFirstRun = false;
+            _erstmaligeAusfuehrung = false;
         }
 
-        public static string bitteUmEingabe()
+        private void bitteUmEingabe()
         {
-            Console.WriteLine("Bitte geben Sie einen Text ein");
-            string eingabe = Console.ReadLine();
-
-            return eingabe;
-        }
-
-        public static void ausgabeUebersicht(string Ausgabe)
-        {
-
+            Console.Clear();
+            Console.WriteLine("Bitte geben Sie Ihre letzte Transaktion ein oder frage Sie nach der Übersicht eines bestimmten Monats");
         }
     }
 }

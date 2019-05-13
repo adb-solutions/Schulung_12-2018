@@ -15,7 +15,7 @@ namespace Haushaltsbuch
 
             while (true)
             {
-                BenutzerInteraktion.Start();
+                BenutzerInteraktion.Aufruf();
 
                 string text = BenutzerInteraktion.bitteUmEingabe();
                 int operation = Buchfuehrung.entscheideOperation(text);
