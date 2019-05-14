@@ -13,7 +13,7 @@ namespace Haushaltsbuch.Business
         private readonly Eintraege _Uebersicht;
         private static bool _isFirstRun = true;
 
-        internal static int entscheideOperation(string text)
+        static public int entscheideOperation(string text)
         {
             string ersterString = Regex.Split(text.TrimStart(), @"[\s]")[0];
             int operation = 0;

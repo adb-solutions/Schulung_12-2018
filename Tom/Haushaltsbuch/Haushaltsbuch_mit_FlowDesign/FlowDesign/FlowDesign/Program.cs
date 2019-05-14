@@ -19,6 +19,8 @@ namespace FlowDesign
 
             var av = new ArgumentVerarbeiter();
             string auswahl = av.leseErstenParameter(ersterParameter);
+            DateTime Zeitpunkt = av.entnehmeZeit(eingabe);
+
             av.operationsAuswahl(auswahl);
         }
     }
