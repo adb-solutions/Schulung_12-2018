@@ -4,25 +4,68 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Haushaltsbuch.Shared;
-using Money;
+using NodaMoney;
 
 namespace Haushaltsbuch.Business
 {
     public static class Summierer
     {
-        public static Money<decimal> Ermittle_Kassenbestand(List<Transaktion> transaktionen)
+        public static Money Ermittle_Kassenbestand(List<Transaktion> transaktionen)
         {
-            return null;
+            Money kassenbestand = new Money(0);
+
+            foreach(Transaktion transaktion in transaktionen)
+            {
+                if (transaktion.Typ == TransaktionTyp.Einzahlung)
+                {
+                    kassenbestand += transaktion.Betrag;
+                }
+
+                if (transaktion.Typ == TransaktionTyp.Auszahlung)
+                {
+                    kassenbestand -= transaktion.Betrag;
+                }
+            }
+
+
+            return kassenbestand;
         }
 
-        public static Kategorie Ermittle_Kategoriesumme(string kategorie, List<Transaktion> transaktionen)
+        public static Kategorie Ermittle_Kategorie(string kategorie, List<Transaktion> transaktionen)
         {
-            return null;
+            IEnumerable<Transaktion> temp = transaktionen.Where(transaktion => transaktion.Typ == TransaktionTyp.Auszahlung &&
+                                                            transaktion.Kategorie.Equals(kategorie, StringComparison.OrdinalIgnoreCase));
+
+            Money summe = new Money(0);
+            foreach (var elem in temp)
+            {
+                summe += elem.Betrag;
+            }
+
+            return new Kategorie(kategorie, summe);
         }
 
-        public static List<Kategorie> Ermittle_Kategorien(List<Transaktion> transaktionen)
+        public static List<Kategorie> Ermittle_Kategorien(DateTime datum, List<Transaktion> transaktionen)
         {
-            return null;
+            var temp = transaktionen.Where(transaktion => 
+                                                            transaktion.Typ == TransaktionTyp.Auszahlung &&
+                                                            transaktion.Datum.Month == datum.Month &&
+                                                            transaktion.Datum.Year == datum.Year)
+                                    .GroupBy(transaktion => transaktion.Kategorie);
+
+            List<Kategorie> result = new List<Kategorie>();
+            foreach (var elem in temp)
+            {
+                Money summe = new Money(0);
+                foreach (Transaktion trans in elem)
+                {
+                    summe += trans.Betrag;
+                }
+
+                result.Add(new Kategorie(elem.Key, summe));
+            }
+
+            return result;
         }
     }
 }

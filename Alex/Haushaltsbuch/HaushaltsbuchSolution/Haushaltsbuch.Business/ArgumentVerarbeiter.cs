@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Haushaltsbuch.Shared;
+using NodaMoney;
 
 namespace Haushaltsbuch.Business
 {
@@ -20,6 +21,33 @@ namespace Haushaltsbuch.Business
 
         public static DateTime Erstelle_Datum_aus_Eingabeparameter(string[] args)
         {
+            Tuple<int, string[]> monat = Ermittle_Monat(args);
+            int jahr = Ermittle_Jahr(monat.Item2);
+
+            return new DateTime(jahr, monat.Item1, 1);
+        }
+
+        private static int Ermittle_Jahr(string[] args)
+        {
+            if (args != null && args.Any())
+            {
+                int jahr = int.Parse(args.First());
+
+                return jahr;
+            }
+
+            return DateTime.Now.Year;
+        }
+
+        private static Tuple<int, string[]> Ermittle_Monat(string[] args)
+        {
+            if(args != null && args.Any())
+            {
+                int monat = int.Parse(args.First());
+                return new Tuple<int, string[]>(monat, args.Skip(1).ToArray());
+            }
+
+            return new Tuple<int, string[]>(DateTime.Now.Month, null);
         }
 
         public static Transaktion Erstelle_Transaktion_aus_Eingabeparameter(string[] args)
@@ -35,27 +63,58 @@ namespace Haushaltsbuch.Business
 
         private static Tuple<Transaktion, string[]> Erstelle_Transaktion_aus_Typ(string[] args)
         {
-            return null;
+            var typ = TransaktionTypKonvertierer.FromString(args.First());
+
+            return new Tuple<Transaktion, string[]>(new Transaktion(typ), args.Skip(1).ToArray());
         }
 
         private static Tuple<Transaktion, string[]> Ergaenze_Datum(Transaktion transaktion, string[] args)
         {
-            return null;
+            string[] argsResult = args;
+
+            DateTime datum;
+            if (DateTime.TryParse(args.First(), out datum))
+            {
+                argsResult = args.Skip(1).ToArray();
+            } 
+            else
+            {
+                datum = DateTime.Now;
+            }
+
+            transaktion.Datum = datum;
+
+            return new Tuple<Transaktion, string[]>(transaktion, argsResult);
         }
 
         private static Tuple<Transaktion, string[]> Ergaenze_Betrag(Transaktion transaktion, string[] args)
         {
-            return null;
+            decimal betrag = decimal.Parse(args.First());
+            transaktion.Betrag = new Money(betrag, Konstanten.DefaultWaehrung);
+
+            return new Tuple<Transaktion, string[]>(transaktion, args.Skip(1).ToArray());
         }
 
         private static Tuple<Transaktion, string[]> Ergaenze_Kategorie(Transaktion transaktion, string[] args)
         {
-            return null;
+            if(args != null && args.Any())
+            {
+                transaktion.Kategorie = args.First();
+                return new Tuple<Transaktion, string[]>(transaktion, args.Skip(1).ToArray());
+            }
+
+            return new Tuple<Transaktion, string[]>(transaktion, null);
         }
 
         private static Transaktion Ergaenze_Memo(Transaktion transaktion, string[] args)
         {
-            return null;
+            if (args != null && args.Any())
+            {
+                transaktion.Memotext = args.First();
+                return transaktion;
+            }
+
+            return transaktion;
         }
     }
 }

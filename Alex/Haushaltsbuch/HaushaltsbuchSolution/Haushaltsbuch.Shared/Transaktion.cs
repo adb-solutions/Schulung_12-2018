@@ -1,5 +1,6 @@
 ﻿using System;
-using Money;
+using Newtonsoft.Json;
+using NodaMoney;
 
 namespace Haushaltsbuch.Shared
 {
@@ -9,10 +10,15 @@ namespace Haushaltsbuch.Shared
 
         public DateTime Datum { get; set; }
 
-        public Money<decimal> Betrag { get; set; }
+        public Money Betrag { get; set; }
 
         public string Kategorie { get; set; }
 
         public string Memotext { get; set; }
+
+        public Transaktion(TransaktionTyp typ)
+        {
+            this.Typ = typ;
+        }
     }
 }

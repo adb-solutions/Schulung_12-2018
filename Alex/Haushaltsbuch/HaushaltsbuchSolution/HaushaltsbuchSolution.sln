@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Business", "H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Shared", "Haushaltsbuch.Shared\Haushaltsbuch.Shared.csproj", "{D9866744-93A4-4B86-8709-FD53FBBBBDD1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Business.Tests", "Haushaltsbuch.Business.Tests\Haushaltsbuch.Business.Tests.csproj", "{30ADED17-1DA3-45E0-8279-1E1EE38076ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Persistence.Tests", "Haushaltsbuch.Persistence.Tests\Haushaltsbuch.Persistence.Tests.csproj", "{663D4CA9-A28B-40D9-98FC-3160AD1016A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -31,5 +35,13 @@ Global
 		{D9866744-93A4-4B86-8709-FD53FBBBBDD1}.Debug|x86.Build.0 = Debug|Any CPU
 		{D9866744-93A4-4B86-8709-FD53FBBBBDD1}.Release|x86.ActiveCfg = Release|Any CPU
 		{D9866744-93A4-4B86-8709-FD53FBBBBDD1}.Release|x86.Build.0 = Release|Any CPU
+		{30ADED17-1DA3-45E0-8279-1E1EE38076ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{30ADED17-1DA3-45E0-8279-1E1EE38076ED}.Debug|x86.Build.0 = Debug|Any CPU
+		{30ADED17-1DA3-45E0-8279-1E1EE38076ED}.Release|x86.ActiveCfg = Release|Any CPU
+		{30ADED17-1DA3-45E0-8279-1E1EE38076ED}.Release|x86.Build.0 = Release|Any CPU
+		{663D4CA9-A28B-40D9-98FC-3160AD1016A3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{663D4CA9-A28B-40D9-98FC-3160AD1016A3}.Debug|x86.Build.0 = Debug|Any CPU
+		{663D4CA9-A28B-40D9-98FC-3160AD1016A3}.Release|x86.ActiveCfg = Release|Any CPU
+		{663D4CA9-A28B-40D9-98FC-3160AD1016A3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

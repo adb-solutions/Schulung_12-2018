@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Money;
+using NodaMoney;
 
 namespace Haushaltsbuch.Shared
 {
@@ -8,7 +8,7 @@ namespace Haushaltsbuch.Shared
     {
         public DateTime Datum { get; set; }
 
-        public Money<decimal> Kassenbestand { get; set; }
+        public Money Kassenbestand { get; set; }
 
         public List<Kategorie> Kategorien { get; set; }
     }
