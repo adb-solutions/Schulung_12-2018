@@ -24,6 +24,10 @@ namespace Haushaltsbuch.Persistence
         public List<Transaktion> Lade()
         {
             List<Transaktion> result = new List<Transaktion>();
+            if (!File.Exists(_datenbank))
+            {
+                return result;
+            }
 
             string[] datensaetze = File.ReadAllLines(_datenbank);
             foreach (var datensatz in datensaetze)

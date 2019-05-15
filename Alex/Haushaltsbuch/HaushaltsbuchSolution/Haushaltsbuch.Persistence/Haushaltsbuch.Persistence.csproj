@@ -7,7 +7,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Haushaltsbuch.Persistence</RootNamespace>
     <AssemblyName>Haushaltsbuch.Persistence</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
