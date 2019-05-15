@@ -38,7 +38,7 @@ namespace Haushaltsbuch.Business
 
             List<Transaktion> alleTranskationen = _repository.Lade();
             Money kassenbestand = Summierer.Ermittle_Kassenbestand(alleTranskationen);
-            Kategorie kategorie = Summierer.Ermittle_Kategorie(transaktion.Kategorie, alleTranskationen);
+            Kategorie kategorie = Summierer.Ermittle_Kategorie(transaktion.Kategorie, transaktion.Datum, alleTranskationen);
 
             return new Tuple<Money, Kategorie>(kassenbestand, kategorie);
         }
@@ -47,7 +47,7 @@ namespace Haushaltsbuch.Business
         {
             List<Transaktion> alleTranskationen = _repository.Lade();
             Money kassenbestand = Summierer.Ermittle_Kassenbestand(alleTranskationen);
-            List<Kategorie> kategorien = Summierer.Ermittle_Kategorien(datum, alleTranskationen);
+            List<Kategorie> kategorien = Summierer.Ermittle_alle_Kategorien(datum, alleTranskationen);
 
             return new KategorieUebersicht()
             {

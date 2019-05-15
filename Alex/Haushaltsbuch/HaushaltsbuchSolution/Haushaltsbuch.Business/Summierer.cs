@@ -27,7 +27,6 @@ namespace Haushaltsbuch.Business
                 }
             }
 
-
             return kassenbestand;
         }
 
