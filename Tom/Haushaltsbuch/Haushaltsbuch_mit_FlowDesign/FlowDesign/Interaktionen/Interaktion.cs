@@ -37,13 +37,13 @@ namespace FlowDesign.Interaktionen
 
         public void Zahlung(string[] args, Action<decimal, Kategorie> onAuszahlung, Action<decimal> onEinzahlung)
         {
-            Transaktion transaktion = ArgumentVerarbeiter.Erstelle_Transaktion_aus_Eingabe(args);
+            Transaktion transaktion = ArgumentVerarbeiter.Erstelle_Transaktion_aus_Kommando(args);
             _respository.Speichern();
             List<Transaktion> alleTransaktionen = _respository.Lade_alle_Transaktionen();
             TypErmittler.Ermittle_Typ(
                 transaktion.Typ,
                 onIstAuszahlung: () => {
-                    Kategorie kategorie = Rechner.Ermittle_Kategore(transaktion.Zahlungsdatum, transaktion.Kategorie, alleTransaktionen);
+                    Kategorie kategorie = Rechner.Ermittle_Kategorie(transaktion.Zahlungsdatum, transaktion.Kategorie, alleTransaktionen);
                     decimal kassebestand = Rechner.Kassenbestand_ermitteln(alleTransaktionen);
                     
                     onAuszahlung(kassebestand, kategorie);
