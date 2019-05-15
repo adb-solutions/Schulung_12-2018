@@ -14,7 +14,7 @@ namespace Haushaltsbuch.Business
         {
             Money kassenbestand = new Money(0);
 
-            foreach (Transaktion transaktion in transaktionen.Where(transaktion => transaktion.Datum.Year <= datum.Year && transaktion.Datum.Month <= datum.Month))
+            foreach(Transaktion transaktion in transaktionen.Where(transaktion => transaktion.Datum.Year <= datum.Year && transaktion.Datum.Month <= datum.Month))
             {
                 if (transaktion.Typ == TransaktionTyp.Einzahlung)
                 {
@@ -26,6 +26,7 @@ namespace Haushaltsbuch.Business
                     kassenbestand -= transaktion.Betrag;
                 }
             }
+
 
             return kassenbestand;
         }
@@ -54,7 +55,7 @@ namespace Haushaltsbuch.Business
                                                             transaktion.Typ == TransaktionTyp.Auszahlung &&
                                                             transaktion.Datum.Month == datum.Month &&
                                                             transaktion.Datum.Year == datum.Year)
-                                    .GroupBy(transaktion => transaktion.Kategorie);
+                                    .GroupBy(transaktion => transaktion.Kategorie).OrderBy(li => li.Key);
 
             List<Kategorie> result = new List<Kategorie>();
             foreach (var elem in temp)

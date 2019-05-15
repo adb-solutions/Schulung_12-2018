@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.Linq;
 using Haushaltsbuch.Shared;
 using NodaMoney;
@@ -83,7 +84,7 @@ namespace Haushaltsbuch.Business
             string[] argsResult = args;
 
             DateTime datum;
-            if (DateTime.TryParse(args.First(), out datum))
+            if (DateTime.TryParseExact(args.First(), Konstanten.Unterstuetze_EingabeDatumsformate, null, DateTimeStyles.None, out datum))
             {
                 argsResult = args.Skip(1).ToArray();
             } 
@@ -96,7 +97,7 @@ namespace Haushaltsbuch.Business
 
             return new Tuple<Transaktion, string[]>(transaktion, argsResult);
         }
-
+        
         private static Tuple<Transaktion, string[]> Ergaenze_Betrag(Transaktion transaktion, string[] args)
         {
             decimal betrag = decimal.Parse(args.First());
