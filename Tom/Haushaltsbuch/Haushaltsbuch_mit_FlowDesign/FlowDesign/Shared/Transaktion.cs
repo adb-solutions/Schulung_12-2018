@@ -6,7 +6,6 @@ namespace FlowDesign.Shared
 {
     class Transaktion
     {
-        
         public TransaktionTyp Typ { get; set; }
 
         public DateTime Zahlungsdatum = new DateTime();
