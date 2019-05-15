@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using Haushaltsbuch.Shared;
-using Money;
+using NodaMoney;
 
 namespace Haushaltsbuch.KonsoleUi
 {
@@ -36,14 +32,30 @@ namespace Haushaltsbuch.KonsoleUi
             Leerzeile();
         }
 
-        public static void Zeige_EinAuszahlung(Money<decimal> kassenbestand, Kategorie kategorie)
+        public static void Zeige_EinAuszahlung(Money kassenbestand, Kategorie kategorie)
         {
+            Leerzeile();
+            Meldung($"Kassenbestand: {kassenbestand.Amount} {kassenbestand.Currency.Code}");
 
+            if(kategorie != null && ! string.IsNullOrEmpty(kategorie.Bezeichnung))
+            {
+                Meldung($"{kategorie.Bezeichnung}: {kategorie.Summe.Amount} {kategorie.Summe.Currency.Code}");
+            }
         }
 
-        public static void Zeige_Uebersicht(KategorieUebersicht)
+        public static void Zeige_Uebersicht(KategorieUebersicht uebersicht)
         {
+            Leerzeile();
 
+            var monatsName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(uebersicht.Datum.Month);
+            Meldung($"{monatsName} {uebersicht.Datum.Year}");
+            Meldung("--------------------");
+            Meldung($"Kassenbestand: {uebersicht.Kassenbestand.Amount} {uebersicht.Kassenbestand.Currency.Code}");
+
+            foreach(var kategorie in uebersicht.Kategorien)
+            {
+                Meldung($"{kategorie.Bezeichnung}: {kategorie.Summe.Amount} {kategorie.Summe.Currency.Code}");
+            }
         }
 
         public static void Start()

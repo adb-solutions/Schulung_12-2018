@@ -18,7 +18,7 @@ namespace Haushaltsbuch.Persistence
         public void Add_und_Speichern(Transaktion transaktion)
         {
             string jsonString = JsonConvert.SerializeObject(transaktion);
-            File.AppendAllText(_datenbank, jsonString);
+            File.AppendAllLines(_datenbank, new string[] { jsonString });
         }
 
         public List<Transaktion> Lade()
