@@ -10,7 +10,7 @@ namespace FlowDesign.Interaktionen
     public class Interaktion
     {
         private TransaktionsRespository _respository;
-
+       
         public Interaktion(TransaktionsRespository respository)
         {
             _respository = respository;
@@ -18,7 +18,7 @@ namespace FlowDesign.Interaktionen
 
         public void Start(string[] args, Action<decimal> ausgangFuerEinzahlung, Action<decimal, Kategorie> ausgangFuerAuszahlung, Action<Uebersicht> onUebersicht)
         {
-            ArgumentVerarbeiter.Ist_Kommando_Uebersicht(
+            ArgumentVerarbeiter.Ist_Kommando_Uebersicht(                // 0
                 args: args,
                 onIstUebersicht: (argsUebersicht) => {                  // 1        Variablenname : ankommender Rückgabewert
                     Uebersicht uebersicht = Uebersicht(argsUebersicht); // 3 = 2    (Methodenaufruf(Übergabeparameter)
@@ -37,15 +37,15 @@ namespace FlowDesign.Interaktionen
 
         public void Zahlung(string[] args, Action<decimal, Kategorie> onAuszahlung, Action<decimal> onEinzahlung)
         {
-            Transaktion transaktion = ArgumentVerarbeiter.Erstelle_Transaktion_aus_Kommando(args);
-            _respository.Speichern();
+            Transaktion transaktion = ArgumentVerarbeiter.Erstelle_Transaktion_aus_Eingabe(args);
+            _respository.Speichern(transaktion);
             List<Transaktion> alleTransaktionen = _respository.Lade_alle_Transaktionen();
             TypErmittler.Ermittle_Typ(
                 transaktion.Typ,
-                onIstAuszahlung: () => {
-                    Kategorie kategorie = Rechner.Ermittle_Kategorie(transaktion.Zahlungsdatum, transaktion.Kategorie, alleTransaktionen);
-                    decimal kassebestand = Rechner.Kassenbestand_ermitteln(alleTransaktionen);
-                    
+                onIstAuszahlung: () => {                                                                                                        // 1        Variablenname : ankommender Rückgabewert
+                    Kategorie kategorie = Rechner.Ermittle_Kategorie(transaktion.ZahlungsDatum, transaktion.Kategorie, alleTransaktionen);      // 3 = 2    (Methodenaufruf(Übergabeparameter)
+                    decimal kassebestand = Rechner.Kassenbestand_ermitteln(alleTransaktionen);                                                  //          Methodenaufruf raus (Übergabewert)
+
                     onAuszahlung(kassebestand, kategorie);
                 },
                 onIstEinzahlung: () =>{
@@ -60,8 +60,8 @@ namespace FlowDesign.Interaktionen
         {
             DateTime Datum = ArgumentVerarbeiter.Erstelle_Datum_aus_Eingabeparameter(args);
             List<Transaktion> alleTransaktionen = _respository.Lade_alle_Transaktionen_vor_und_aus_dem_Zeitraum(Datum);
-            Kategorie alleKategorien = Rechner.Ermittle_alle_Kategorien(Datum, alleTransaktionen);
-            decimal kategorienKassenbestand = Rechner.Ermittle_Kassenbestand_der_Kategorie();
+            List<Kategorie> alleKategorien = Rechner.Ermittle_alle_Kategorien(Datum, alleTransaktionen);
+            decimal kategorienKassenbestand = Rechner.Ermittle_Kassenbestand_der_Kategorie(alleTransaktionen);
             Uebersicht uebergabeUebersicht = new Uebersicht(Datum, alleKategorien, kategorienKassenbestand);
             return uebergabeUebersicht;
         }

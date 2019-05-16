@@ -8,12 +8,12 @@ namespace FlowDesign.Business
 {
     class Rechner
     {
-        internal static Kategorie Ermittle_Kategorie(DateTime zahlungsdatum, string kategorieName, List<Transaktion> alleTransaktionen)
+        public static Kategorie Ermittle_Kategorie(DateTime zahlungsdatum, string kategorieName, List<Transaktion> alleTransaktionen)
         {
             IEnumerable<Transaktion> zaehler = alleTransaktionen.Where(transaktion =>
                                                             transaktion.Typ == TransaktionTyp.Auszahlung &&
-                                                            transaktion.Datum.Month == datum.Month &&
-                                                            transaktion.Datum.Year == datum.Year &&
+                                                            transaktion.ZahlungsDatum.Month == zahlungsdatum.Month &&
+                                                            transaktion.ZahlungsDatum.Year == zahlungsdatum.Year &&
 
                                                             transaktion.Kategorie.Equals(kategorieName, StringComparison.OrdinalIgnoreCase));
             decimal summe = 0m;
@@ -25,7 +25,7 @@ namespace FlowDesign.Business
             return kategorie;
         }
 
-        internal static decimal Kassenbestand_ermitteln(List<Transaktion> alleTransaktionen)
+        public static decimal Kassenbestand_ermitteln(List<Transaktion> alleTransaktionen)
         {
             decimal kassenbestand = 0m;
             foreach (Transaktion transaktion in alleTransaktionen)
@@ -44,12 +44,12 @@ namespace FlowDesign.Business
             return kassenbestand;
         }
 
-        internal static List<Kategorie> Ermittle_alle_Kategorien(DateTime datum, List<Transaktion> alleTransaktionen)
+        public static List<Kategorie> Ermittle_alle_Kategorien(DateTime datum, List<Transaktion> alleTransaktionen)
         {
             var zaehlerTransaktionen = alleTransaktionen.Where(transaktion =>
                                                             transaktion.Typ == TransaktionTyp.Auszahlung &&
-                                                            transaktion.Zahlungsdatum.Month == datum.Month &&
-                                                            transaktion.Zahlungsdatum.Year == datum.Year)
+                                                            transaktion.ZahlungsDatum.Month == datum.Month &&
+                                                            transaktion.ZahlungsDatum.Year == datum.Year)
                                     .GroupBy(transaktion => transaktion.Kategorie);
 
             List<Kategorie> result = new List<Kategorie>();
@@ -67,7 +67,7 @@ namespace FlowDesign.Business
             return result;
         }
 
-        internal static decimal Ermittle_Kassenbestand_der_Kategorie(List<Transaktion> alleTransaktionenderKategorie)
+        public static decimal Ermittle_Kassenbestand_der_Kategorie(List<Transaktion> alleTransaktionenderKategorie)
         {
             decimal kassenbestand = 0m;
             foreach (Transaktion transaktion in alleTransaktionenderKategorie)

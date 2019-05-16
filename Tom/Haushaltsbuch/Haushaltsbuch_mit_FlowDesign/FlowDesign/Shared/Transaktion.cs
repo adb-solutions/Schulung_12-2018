@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace FlowDesign.Shared
 {
@@ -8,11 +9,12 @@ namespace FlowDesign.Shared
     {
         public TransaktionTyp Typ { get; set; }
 
-        public DateTime Zahlungsdatum = new DateTime();
+        public DateTime ZahlungsDatum { get; set; }
+
         public decimal Betrag { get; set; }
+
         public string Kategorie { get; set; }
+
         public string Bemerkung { get; set; }
-
-
     }
 }

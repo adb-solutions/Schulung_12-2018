@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowDesign", "FlowDesign\FlowDesign.csproj", "{16EADB8A-20D7-43EA-94B3-ECBCAE65721B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlowDesign", "FlowDesign\FlowDesign.csproj", "{16EADB8A-20D7-43EA-94B3-ECBCAE65721B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowDesign.UnitTests", "FlowDesign.UnitTests\FlowDesign.UnitTests.csproj", "{79AAC47D-7DEA-4C3C-9F7D-DE0356B8D5F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{16EADB8A-20D7-43EA-94B3-ECBCAE65721B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16EADB8A-20D7-43EA-94B3-ECBCAE65721B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16EADB8A-20D7-43EA-94B3-ECBCAE65721B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79AAC47D-7DEA-4C3C-9F7D-DE0356B8D5F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79AAC47D-7DEA-4C3C-9F7D-DE0356B8D5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79AAC47D-7DEA-4C3C-9F7D-DE0356B8D5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79AAC47D-7DEA-4C3C-9F7D-DE0356B8D5F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

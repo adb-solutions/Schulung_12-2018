@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FlowDesign.Shared
 {
-    class Kategorie
+    public class Kategorie
     {
         public Kategorie(decimal summe, string bezeichnung)
         {
