@@ -33,12 +33,32 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaMoney">
+      <HintPath>..\packages\NodaMoney.1.0.5\lib\net45\NodaMoney.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SummiererTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Haushaltsbuch.Business\Haushaltsbuch.Business.csproj">
+      <Project>{0F42EA23-1B86-4DB3-8B13-1326933BA28F}</Project>
+      <Name>Haushaltsbuch.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Haushaltsbuch.Shared\Haushaltsbuch.Shared.csproj">
+      <Project>{D9866744-93A4-4B86-8709-FD53FBBBBDD1}</Project>
+      <Name>Haushaltsbuch.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Haushaltsbuch.Persistence
 {
-    public class TransaktionenRepository
+    public class TransaktionenRepository : IDisposable
     {
         private readonly string _datenbank;
 
@@ -37,6 +37,10 @@ namespace Haushaltsbuch.Persistence
             }
 
             return result;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
