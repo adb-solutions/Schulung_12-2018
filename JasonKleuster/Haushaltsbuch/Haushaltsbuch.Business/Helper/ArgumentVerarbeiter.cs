@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -8,7 +9,7 @@ using Haushaltsbuch.Shared.BusinessModels;
 
 namespace Haushaltsbuch.Business
 {
-    class ArgumentVerarbeiter
+    public class ArgumentVerarbeiter
     {
         public string[] ParameterAktionBestimmen(string[] args, Action<string[]> onZahlung, Action<string[]> onIndex)
         {
@@ -35,11 +36,22 @@ namespace Haushaltsbuch.Business
         }
 
         // ZahlungsdatenAuslesen
-        private (string[] args, Transaktion transaktion) ParameterDatumAuslesen(string[] args, Transaktion transaktion)
+        internal (string[] args, Transaktion transaktion) ParameterDatumAuslesen(string[] args, Transaktion transaktion)
         {
+            string temp = args[0];
 
+            DateTime ergebnis;
 
-            return (args, transaktion);
+            if (DateTime.TryParseExact(temp, "dd.MM.yyyy", null, DateTimeStyles.None, out ergebnis))
+            {
+                transaktion.Datum = ergebnis;
+                return (args.Skip(1).ToArray(), transaktion);
+            }
+            else
+            {
+                transaktion.Datum = DateTime.Now;
+                return (args, transaktion);
+            }
         }
 
         // ZahlungsdatenAuslesen

@@ -20,14 +20,7 @@ namespace Haushaltsbuch.Persistence
 
         public void CheckForLocked(Action unlocked, Action locked)
         {
-            if (true)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
         }
 
         public void Warte()

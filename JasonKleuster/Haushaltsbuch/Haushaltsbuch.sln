@@ -23,6 +23,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Persistence",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Shared", "Haushaltsbuch.Shared\Haushaltsbuch.Shared.csproj", "{E46C6566-DA9C-4BCE-B70B-F04761AA16BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haushaltsbuch.Tests", "Haushaltsbuch.Tests\Haushaltsbuch.Tests.csproj", "{FFC47845-B5DD-48B6-8DDF-55387249FB3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F02C1C3B-87C7-4A56-859A-48E46CAC9C99} = {F02C1C3B-87C7-4A56-859A-48E46CAC9C99}
+		{A6D3273F-E92C-4173-8523-3F1672AC9AD0} = {A6D3273F-E92C-4173-8523-3F1672AC9AD0}
+		{E46C6566-DA9C-4BCE-B70B-F04761AA16BC} = {E46C6566-DA9C-4BCE-B70B-F04761AA16BC}
+		{F1CF11F5-1010-4EA4-BFAF-7CC5F9AFFC4E} = {F1CF11F5-1010-4EA4-BFAF-7CC5F9AFFC4E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +53,10 @@ Global
 		{E46C6566-DA9C-4BCE-B70B-F04761AA16BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E46C6566-DA9C-4BCE-B70B-F04761AA16BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E46C6566-DA9C-4BCE-B70B-F04761AA16BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC47845-B5DD-48B6-8DDF-55387249FB3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC47845-B5DD-48B6-8DDF-55387249FB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC47845-B5DD-48B6-8DDF-55387249FB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC47845-B5DD-48B6-8DDF-55387249FB3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

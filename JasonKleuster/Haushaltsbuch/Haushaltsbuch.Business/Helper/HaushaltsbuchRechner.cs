@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,9 +31,16 @@ namespace Haushaltsbuch.Business
 
         public DateTime DatumErmitteln(Index index)
         {
-            
+            DateTimeFormatInfo info = new DateTimeFormatInfo();
 
-            return DateTime.Now;
+            int jahr = Convert.ToInt32(index.Jahr);
+            int monat = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList().IndexOf(index.Monat) + 1;
+
+            var temp = new DateTime(jahr, monat, 1);
+
+            DateTime datum = temp.AddMonths(1).AddDays(-1);
+
+            return datum;
         }
 
         public decimal KategorieGesamtbetragBerechnen(object transaktionen)

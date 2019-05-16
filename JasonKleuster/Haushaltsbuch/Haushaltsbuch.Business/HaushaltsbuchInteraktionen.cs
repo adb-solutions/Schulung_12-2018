@@ -37,12 +37,6 @@ namespace Haushaltsbuch.Business
         {
             Locker locker = new Locker();
 
-            if (locker.CheckForLocked())
-            {
-                locker.Warte();
-            }
-            locker.LockStarten();
-
             TransaktionenRepository repository = new TransaktionenRepository();
             repository.Speichern(transaktion);
 
