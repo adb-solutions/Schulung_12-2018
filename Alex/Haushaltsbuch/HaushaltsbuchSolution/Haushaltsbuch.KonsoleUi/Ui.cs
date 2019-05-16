@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Reflection;
+using System.Runtime.Versioning;
+using Haushaltsbuch.KonsoleUi.Helper;
 using Haushaltsbuch.Shared;
 using NodaMoney;
 
@@ -16,20 +19,24 @@ namespace Haushaltsbuch.KonsoleUi
             Meldung(@"███████║███████║██║   ██║███████╗███████║███████║██║     ██║   ███████╗██████╔╝██║   ██║██║     ███████║");
             Meldung(@"██╔══██║██╔══██║██║   ██║╚════██║██╔══██║██╔══██║██║     ██║   ╚════██║██╔══██╗██║   ██║██║     ██╔══██║");
             Meldung(@"██║  ██║██║  ██║╚██████╔╝███████║██║  ██║██║  ██║███████╗██║   ███████║██████╔╝╚██████╔╝╚██████╗██║  ██║");
-            Meldung(@"╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝   ╚══════╝╚═════╝  ╚═════╝  ╚═════╝╚═╝  ╚═╝");
-
+            Meldung($"╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝   ╚══════╝╚═════╝  ╚═════╝  ╚═════╝╚═╝  ╚═╝ v{VersionsHelper.GetVersionsnummer(Assembly.GetAssembly(typeof(Programm)))}");
+            
             Leerzeile();
-            Meldung($"Herzlich Willkommen beim Haushaltsbuch - Version {typeof(Programm).Assembly.GetName().Version}");
-            Aufrufmoeglichkeiten();
+            //Aufrufmoeglichkeiten();
         }
 
         public static void Aufrufmoeglichkeiten()
         {
             Meldung("Folgende Aufrufe sind möglich:");
-            Meldung("Einzahlung: hb einzahlung [datum] betrag");
-            Meldung("Auszahlung: hb auszahlung [datum] betrag kategorie [memo]");
-            Meldung("Übersicht: hb uebersicht");
+            Meldung("\ta) Einzahlung tätigen:\thb einzahlung [datum] betrag");
+            Meldung("\tb) Auszahlung tätigen:\thb auszahlung [datum] betrag kategorie [memo]");
+            Meldung("\tc) Übersicht anzeigen:\thb uebersicht");
             Leerzeile();
+        }
+
+        public static void Ende()
+        {
+            Meldung(@"========================================================================================================");
         }
 
         public static void Zeige_EinAuszahlung(Money kassenbestand, Kategorie kategorie)

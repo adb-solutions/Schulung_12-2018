@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Haushaltsbuch.Shared;
 using NodaMoney;
@@ -9,13 +10,22 @@ namespace Haushaltsbuch.Business
     {
         public static void Ist_Uebersicht_Kommando(string[] args, Action<string[]> onIstUebersicht, Action<string[]> onIstEinAuszahlung)
         {
-            if (args.First().Equals("übersicht", StringComparison.CurrentCulture))
+            var kommando = args.First();
+            if (kommando.Equals("übersicht", StringComparison.CurrentCulture))
             {
                 onIstUebersicht(args.Skip(1).ToArray());
             }
-            else
+            else if (kommando.Equals("einzahlung", StringComparison.CurrentCulture))
             {
                 onIstEinAuszahlung(args);
+            }
+            else if (kommando.Equals("auszahlung", StringComparison.CurrentCulture))
+            {
+                onIstEinAuszahlung(args);
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("Kommando nicht erkannt");
             }
         }
 

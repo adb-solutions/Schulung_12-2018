@@ -11,13 +11,13 @@ namespace Haushaltsbuch.KonsoleUi
         public static void Main(string[] args)
         {
 #if DEBUG
-            //args = new string[] { "einzahlung", "400" };
+            args = new string[] { "einzahlung", "400" };
             //args = new string[] { "auszahlung", "5,99", "Restaurantbesuche", "Schokobecher" };
             //args = new string[] { "auszahlung", "01.01.2015", "700", "Miete" };
             //args = new string[] { "einzahlung", "01.01.2015", "400" };
             //args = new string[] { "übersicht" };
             //args = new string[] { "übersicht", "12", "2014" };
-            args = new string[] { "übersicht", "01", "2015" };
+            //args = new string[] { "übersicht", "01", "2015" };
 #endif
 
             Ui.Start();
@@ -34,6 +34,8 @@ namespace Haushaltsbuch.KonsoleUi
                     Ui.Zeige_Uebersicht(kategorieUebersicht);
                 }
             );
+
+            Ui.Ende();
         }
     }
 }

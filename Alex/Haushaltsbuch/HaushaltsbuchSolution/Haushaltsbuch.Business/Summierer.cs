@@ -10,11 +10,11 @@ namespace Haushaltsbuch.Business
 {
     public static class Summierer
     {
-        public static Money Ermittle_Kassenbestand(List<Transaktion> transaktionen)
+        public static Money Ermittle_Kassenbestand(DateTime datum, List<Transaktion> transaktionen)
         {
             Money kassenbestand = new Money(0);
 
-            foreach(Transaktion transaktion in transaktionen)
+            foreach (Transaktion transaktion in transaktionen.Where(transaktion => transaktion.Datum.Year <= datum.Year && transaktion.Datum.Month <= datum.Month))
             {
                 if (transaktion.Typ == TransaktionTyp.Einzahlung)
                 {
@@ -27,13 +27,16 @@ namespace Haushaltsbuch.Business
                 }
             }
 
-
             return kassenbestand;
         }
 
-        public static Kategorie Ermittle_Kategorie(string kategorie, List<Transaktion> transaktionen)
+        public static Kategorie Ermittle_Kategorie(string kategorie, DateTime datum, List<Transaktion> transaktionen)
         {
-            IEnumerable<Transaktion> temp = transaktionen.Where(transaktion => transaktion.Typ == TransaktionTyp.Auszahlung &&
+            IEnumerable<Transaktion> temp = transaktionen.Where(transaktion => 
+                                                            transaktion.Typ == TransaktionTyp.Auszahlung &&
+                                                            transaktion.Datum.Month == datum.Month &&
+                                                            transaktion.Datum.Year == datum.Year &&
+
                                                             transaktion.Kategorie.Equals(kategorie, StringComparison.OrdinalIgnoreCase));
 
             Money summe = new Money(0);
@@ -45,7 +48,7 @@ namespace Haushaltsbuch.Business
             return new Kategorie(kategorie, summe);
         }
 
-        public static List<Kategorie> Ermittle_Kategorien(DateTime datum, List<Transaktion> transaktionen)
+        public static List<Kategorie> Ermittle_alle_Kategorien(DateTime datum, List<Transaktion> transaktionen)
         {
             var temp = transaktionen.Where(transaktion => 
                                                             transaktion.Typ == TransaktionTyp.Auszahlung &&

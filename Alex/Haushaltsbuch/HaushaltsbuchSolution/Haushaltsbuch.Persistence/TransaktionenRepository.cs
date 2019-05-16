@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Haushaltsbuch.Persistence
 {
-    public class TransaktionenRepository
+    public class TransaktionenRepository : IDisposable
     {
         private readonly string _datenbank;
 
@@ -24,6 +24,10 @@ namespace Haushaltsbuch.Persistence
         public List<Transaktion> Lade()
         {
             List<Transaktion> result = new List<Transaktion>();
+            if (!File.Exists(_datenbank))
+            {
+                return result;
+            }
 
             string[] datensaetze = File.ReadAllLines(_datenbank);
             foreach (var datensatz in datensaetze)
@@ -33,6 +37,10 @@ namespace Haushaltsbuch.Persistence
             }
 
             return result;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
