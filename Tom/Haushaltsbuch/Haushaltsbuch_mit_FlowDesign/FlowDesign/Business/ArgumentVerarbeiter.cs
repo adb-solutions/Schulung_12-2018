@@ -55,7 +55,7 @@ namespace FlowDesign.Business
         {
             DateTime datum;
             string[] argsGekuerzt = args;
-            if (DateTime.TryParseExact(args.First(), "dd.MM.YYYY", provider:null,style:DateTimeStyles.None, out datum))
+            if (DateTime.TryParseExact(args.First(), "dd.MM.YYYY", provider:null,style:DateTimeStyles.None, result: out datum))
             {
                 argsGekuerzt = args.Skip(1).ToArray();
             }

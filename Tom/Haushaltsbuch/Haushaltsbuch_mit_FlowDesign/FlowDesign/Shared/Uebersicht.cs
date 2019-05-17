@@ -9,7 +9,7 @@ namespace FlowDesign.Shared
         public DateTime Datum { get; set; }
         public List<Kategorie> Kategorien { get; set; }
         public decimal Kassenbestand { get; set; }
-        public Uebersicht(in DateTime datum, List<Kategorie> alleKategorien, decimal kategorienKassenbestand)
+        public Uebersicht(DateTime datum, List<Kategorie> alleKategorien, decimal kategorienKassenbestand)
         {
             this.Datum = datum;
             this.Kategorien = alleKategorien;
