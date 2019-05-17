@@ -11,20 +11,25 @@ namespace FlowDesign
     {
         public static void Main(string[] args)
         {
-            UiM.Start();
-            new Interaktion(new TransaktionsRespository()).Start(args, 
-                ausgangFuerEinzahlung: (kassenbestand) => {
+            //UiM.Start();
+            Console.ReadKey();
+            new Interaktion(new TransaktionsRespository()).Start(args,
+                ausgangFuerEinzahlung: (kassenbestand) =>
+                {
                     UiM.EinzahlungAusgeben(kassenbestand);
                 },
-                ausgangFuerAuszahlung: (kassenbestand, kategorie) => {
+                ausgangFuerAuszahlung: (kassenbestand, kategorie) =>
+                {
 
                     UiM.AuszahlungAusgeben(kassenbestand, kategorie);
-                }, 
-                onUebersicht: (uebersicht) => {
+                },
+                onUebersicht: (uebersicht) =>
+                {
 
                     UiM.UebersichtAusgeben(uebersicht);
                 }
             );
+            Console.ReadLine();
         }
     }
 }
