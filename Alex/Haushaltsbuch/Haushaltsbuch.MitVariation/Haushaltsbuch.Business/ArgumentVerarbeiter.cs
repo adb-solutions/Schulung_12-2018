@@ -12,15 +12,15 @@ namespace Haushaltsbuch.Business
         public static void Ist_Uebersicht_Kommando(string[] args, Action<string[]> onIstUebersicht, Action<string[]> onIstEinAuszahlung)
         {
             var kommando = args.First();
-            if (kommando.Equals("übersicht", StringComparison.CurrentCulture))
+            if (kommando.Equals("übersicht", StringComparison.CurrentCultureIgnoreCase))
             {
                 onIstUebersicht(args.Skip(1).ToArray());
             }
-            else if (kommando.Equals("einzahlung", StringComparison.CurrentCulture))
+            else if (kommando.Equals("einzahlung", StringComparison.CurrentCultureIgnoreCase))
             {
                 onIstEinAuszahlung(args);
             }
-            else if (kommando.Equals("auszahlung", StringComparison.CurrentCulture))
+            else if (kommando.Equals("auszahlung", StringComparison.CurrentCultureIgnoreCase))
             {
                 onIstEinAuszahlung(args);
             }
@@ -38,29 +38,6 @@ namespace Haushaltsbuch.Business
             return new DateTime(jahr, monat.Item1, 1);
         }
 
-        private static int Ermittle_Jahr(string[] args)
-        {
-            if (args != null && args.Any())
-            {
-                int jahr = int.Parse(args.First());
-
-                return jahr;
-            }
-
-            return DateTime.Now.Year;
-        }
-
-        private static Tuple<int, string[]> Ermittle_Monat(string[] args)
-        {
-            if(args != null && args.Any())
-            {
-                int monat = int.Parse(args.First());
-                return new Tuple<int, string[]>(monat, args.Skip(1).ToArray());
-            }
-
-            return new Tuple<int, string[]>(DateTime.Now.Month, null);
-        }
-
         public static Transaktion Erstelle_Transaktion_aus_Eingabeparameter(string[] args)
         {
             Tuple<Transaktion, string[]> temp = Erstelle_Transaktion_aus_Typ(args);
@@ -72,14 +49,37 @@ namespace Haushaltsbuch.Business
             return transaktion;
         }
 
-        private static Tuple<Transaktion, string[]> Erstelle_Transaktion_aus_Typ(string[] args)
+        internal static int Ermittle_Jahr(string[] args)
+        {
+            if (args != null && args.Any())
+            {
+                int jahr = int.Parse(args.First());
+
+                return jahr;
+            }
+
+            return DateTime.Now.Year;
+        }
+
+        internal static Tuple<int, string[]> Ermittle_Monat(string[] args)
+        {
+            if(args != null && args.Any())
+            {
+                int monat = int.Parse(args.First());
+                return new Tuple<int, string[]>(monat, args.Skip(1).ToArray());
+            }
+
+            return new Tuple<int, string[]>(DateTime.Now.Month, null);
+        }
+        
+        internal static Tuple<Transaktion, string[]> Erstelle_Transaktion_aus_Typ(string[] args)
         {
             var typ = TransaktionTypKonvertierer.FromString(args.First());
 
             return new Tuple<Transaktion, string[]>(new Transaktion(typ), args.Skip(1).ToArray());
         }
 
-        private static Tuple<Transaktion, string[]> Ergaenze_Datum(Transaktion transaktion, string[] args)
+        internal static Tuple<Transaktion, string[]> Ergaenze_Datum(Transaktion transaktion, string[] args)
         {
             string[] argsResult = args;
 
@@ -98,7 +98,7 @@ namespace Haushaltsbuch.Business
             return new Tuple<Transaktion, string[]>(transaktion, argsResult);
         }
         
-        private static Tuple<Transaktion, string[]> Ergaenze_Betrag(Transaktion transaktion, string[] args)
+        internal static Tuple<Transaktion, string[]> Ergaenze_Betrag(Transaktion transaktion, string[] args)
         {
             decimal betrag = decimal.Parse(args.First());
             transaktion.Betrag = new Money(betrag, Konstanten.DefaultWaehrung);
@@ -106,7 +106,7 @@ namespace Haushaltsbuch.Business
             return new Tuple<Transaktion, string[]>(transaktion, args.Skip(1).ToArray());
         }
 
-        private static Tuple<Transaktion, string[]> Ergaenze_Kategorie(Transaktion transaktion, string[] args)
+        internal static Tuple<Transaktion, string[]> Ergaenze_Kategorie(Transaktion transaktion, string[] args)
         {
             if(args != null && args.Any())
             {
@@ -117,7 +117,7 @@ namespace Haushaltsbuch.Business
             return new Tuple<Transaktion, string[]>(transaktion, null);
         }
 
-        private static Transaktion Ergaenze_Memo(Transaktion transaktion, string[] args)
+        internal static Transaktion Ergaenze_Memo(Transaktion transaktion, string[] args)
         {
             if (args != null && args.Any())
             {

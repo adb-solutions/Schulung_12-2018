@@ -32,6 +32,41 @@ namespace Haushaltsbuch.Persistence.Tests
         }
 
         [Test]
+        public void Kategorie_existiert_Erwarte_Exisitiert()
+        {
+            string demoKat = "Test_fuer_Kat_exisitiert";
+            Transaktion neuerEintrag = new Transaktion(TransaktionTyp.Auszahlung)
+            {
+                Datum = DateTime.Now,
+                Betrag = new Money(0.01),
+                Kategorie = demoKat
+            };
+            _repository.Add_und_Speichern(neuerEintrag);
+
+            _repository.Kategorie_existiert(demoKat, () =>
+            {
+                Assert.Pass();
+            }, () =>
+            {
+                Assert.Fail($"Kategorie {demoKat} existiert nicht.");
+            });
+        }
+
+        [Test]
+        public void Kategorie_existiert_Erwarte_Exisitiert_Nicht()
+        {
+            string demoKat = "Test_fuer_Kat_exisitiert_nicht";
+
+            _repository.Kategorie_existiert(demoKat, () =>
+            {
+                Assert.Fail($"Kategorie {demoKat} existiert.");
+            }, () =>
+            {
+                Assert.Pass();
+            });
+        }
+
+        [Test]
         public void Speichere_Eintrag_Erwarte_Erfolg()
         {
             Transaktion neuerEintrag = new Transaktion(TransaktionTyp.Einzahlung)
