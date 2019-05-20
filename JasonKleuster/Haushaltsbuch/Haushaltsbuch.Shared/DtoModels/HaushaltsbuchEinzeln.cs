@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Haushaltsbuch.Shared.BusinessModels;
 
 namespace Haushaltsbuch.Shared
 {
     public class HaushaltsbuchEinzeln : IHaushaltsbuch
     {
-        public HaushaltsbuchEinzeln(decimal kassenbestand, Kategorie dtoModel)
+        public HaushaltsbuchEinzeln(decimal kassenbestand, Kategorie kategorie, Zahlung typ)
         {
             Kassenbestand = kassenbestand;
-            Kategorie = dtoModel;
+            Kategorie = kategorie;
+            Typ = typ;
         }
+
+        public Zahlung Typ { get; set; }
 
         public decimal Kassenbestand { get; set; }
 

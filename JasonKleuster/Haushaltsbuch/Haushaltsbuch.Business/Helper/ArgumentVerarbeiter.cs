@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,69 +12,103 @@ namespace Haushaltsbuch.Business
 {
     public class ArgumentVerarbeiter
     {
-        public string[] ParameterAktionBestimmen(string[] args, Action<string[]> onZahlung, Action<string[]> onIndex)
+        public void ParameterAktionBestimmen(string[] args, 
+            Action<string[]> onZahlung, 
+            Action<string[]> onIndex)
         {
-            return args;
+            string aktion = args.First();
+
+            if (args.First() == "einzahlung")
+            {
+                onZahlung(args);
+            }
+            else if (args.First() == "auszahlung")
+            {
+                onZahlung(args);
+            }
+            else if (args.First() == "überischt")
+            {
+                onIndex(args);
+            }
         }
 
         public Transaktion ZahlungsdatenAuslesen(string[] args)
         {
-            var values = ParameterAktionAuslesenUndTransaktionErstellen(args);
-            values = ParameterDatumAuslesen(values.args, values.transaktion);
-            values = ParameterBetragAuslesen(values.args, values.transaktion);
-            values = ParameterKategorieAuslesen(values.args, values.transaktion); 
-            var result = ParameterMemoAuslesen(values.args, values.transaktion); 
+            var values = ParametAktionAuslesenUndTransaktionErstellen(args);
+            values = ParameterDatumAuslesen(values.Item1, values.Item2);
+            values = ParameterBetragAuslesen(values.Item1, values.Item2);
+            values = ParameterKategorieAuslesen(values.Item1, values.Item2); 
+            var result = ParameterMemoAuslesen(values.Item1, values.Item2); 
 
             return result;
         }
 
         // ZahlungsdatenAuslesen
-        private (string[] args, Transaktion transaktion) ParameterAktionAuslesenUndTransaktionErstellen(string[] args)
+        private Tuple<string[], Transaktion> ParametAktionAuslesenUndTransaktionErstellen(string[] args)
         {
             Transaktion transaktion = new Transaktion();
 
-            return (args, transaktion);
+            if (args.First() == "einzahlung")
+            {
+                transaktion.Typ = Zahlung.Einzahlung;
+            }
+            else if (args.First() == "auszahlung")
+            {
+                transaktion.Typ = Zahlung.Auszahlung;
+            }
+      
+            return new Tuple<string[], Transaktion>(args.Skip(1).ToArray(), transaktion);
         }
 
         // ZahlungsdatenAuslesen
-        internal (string[] args, Transaktion transaktion) ParameterDatumAuslesen(string[] args, Transaktion transaktion)
+        internal Tuple<string[], Transaktion> ParameterDatumAuslesen(string[] args, Transaktion transaktion)
         {
-            string temp = args[0];
+            string[] argsResult = args;
 
-            DateTime ergebnis;
-
-            if (DateTime.TryParseExact(temp, "dd.MM.yyyy", null, DateTimeStyles.None, out ergebnis))
+            DateTime datum;
+            if (DateTime.TryParse(args.First(), out datum))
             {
-                transaktion.Datum = ergebnis;
-                return (args.Skip(1).ToArray(), transaktion);
+                argsResult = args.Skip(1).ToArray();
             }
             else
             {
-                transaktion.Datum = DateTime.Now;
-                return (args, transaktion);
+                datum = DateTime.Now;
             }
+
+            transaktion.Datum = datum;
+
+            return new Tuple<string[], Transaktion>(argsResult, transaktion);
         }
 
         // ZahlungsdatenAuslesen
-        private (string[] args, Transaktion transaktion) ParameterBetragAuslesen(string[] args, Transaktion transaktion)
+        private Tuple<string[], Transaktion> ParameterBetragAuslesen(string[] args, Transaktion transaktion)
         {
+            decimal betrag = decimal.Parse(args.First());
+            transaktion.Wert = betrag;
 
-
-            return (args, transaktion);
+            return new Tuple<string[], Transaktion>(args.Skip(1).ToArray(), transaktion);
         }
 
         // ZahlungsdatenAuslesen
-        private (string[] args, Transaktion transaktion) ParameterKategorieAuslesen(string[] args, Transaktion transaktion)
+        private Tuple<string[], Transaktion> ParameterKategorieAuslesen(string[] args, Transaktion transaktion)
         {
+            if (args != null && args.Any())
+            {
+                transaktion.Kategorie = args.First();
+                return new Tuple<string[], Transaktion>(args.Skip(1).ToArray(), transaktion);
+            }
 
-
-            return (args, transaktion);
+            return new Tuple<string[], Transaktion>(null, transaktion);
         }
 
         // ZahlungsdatenAuslesen
         private Transaktion ParameterMemoAuslesen(string[] args, Transaktion transaktion)
         {
-
+            if (args != null && args.Any())
+            {
+                transaktion.Memotext = args.First();
+                return transaktion;
+            }
 
             return transaktion;
         }
@@ -83,25 +118,37 @@ namespace Haushaltsbuch.Business
         public Index IndexdatenAuslesen(string[] args)
         {
             var values = ParameterMonatAuslesenUndIndexErstellen(args);
-            var result = ParameterJahrAuslesen(values.args, values.index);
+            var result = ParameterJahrAuslesen(values.Item1, values.Item2);
 
 
             return result;
         }
 
         // ZahlungsdatenAuslesen
-        private (string[] args, Index index) ParameterMonatAuslesenUndIndexErstellen(string[] args)
+        private Tuple<Index, string[]> ParameterMonatAuslesenUndIndexErstellen(string[] args)
         {
             Index index = new Index();
 
-            return (args, index);
+            if (args != null && args.Any())
+            {
+                index.Monat = args.First();
+                return new Tuple<Index, string[]>(index, args.Skip(1).ToArray());
+            }
+
+            index.Monat = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+            return new Tuple<Index, string[]>(index, args);
         }
 
         // ZahlungsdatenAuslesen
-        private Index ParameterJahrAuslesen(string[] args, Index index)
+        private Index ParameterJahrAuslesen(Index index, string[] args)
         {
+            if (args != null && args.Any())
+            {
+                index.Jahr = args.First();
+                return index;
+            }
 
-
+            index.Jahr = DateTime.Now.Year.ToString();
             return index;
         }
     }

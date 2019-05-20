@@ -12,36 +12,49 @@ namespace Haushaltsbuch.Business
     public class HaushaltsbuchInteraktionen
     {
         // TODO Lieser fragen ist das konsistent
-        public IHaushaltsbuch Start(string[] args)
+        public void Start(string[] args, 
+            Action<Transaktion> onZahlung, 
+            Action<Index> onIndex)
         {
             var verarbeiter = new ArgumentVerarbeiter();
-
-            IHaushaltsbuch dtoModel = null;
 
             verarbeiter.ParameterAktionBestimmen(args, 
                 onZahlung: argumente =>
                 {
                     var transaktion = verarbeiter.ZahlungsdatenAuslesen(argumente);
-                    dtoModel = Ein_Auszahlung(transaktion);
+                    onZahlung(transaktion);
                 },
                 onIndex: argumente => 
                 {
                     var index = verarbeiter.IndexdatenAuslesen(argumente);
-                    dtoModel = Index_anzeigen(index);
+                    onIndex(index);
                 });
-
-            return dtoModel;
         }
 
-        private HaushaltsbuchEinzeln Ein_Auszahlung(Transaktion transaktion)
+        public HaushaltsbuchEinzeln Zahlung(Transaktion transaktion)
         {
             Locker locker = new Locker();
+            bool isLocked = true;
+
+            do
+            {
+                locker.Check_for_locked(
+                    () => {
+                        isLocked = false;
+                        locker.Lock_starten();
+                    },
+                    () => {
+                        isLocked = true;
+                        locker.Warte();
+                    }
+                );
+
+            } while (isLocked);
 
             TransaktionenRepository repository = new TransaktionenRepository();
             repository.Speichern(transaktion);
 
-            locker.LockBeenden();
-
+            locker.Lock_beenden();
 
             var transaktionen = repository.TransaktionenLadenByDatumAndKategorie(transaktion.Datum, transaktion.Kategorie);
 
@@ -58,7 +71,7 @@ namespace Haushaltsbuch.Business
             return null;
         }
 
-        private HaushaltsbuchGesamt Index_anzeigen(Index index)
+        public HaushaltsbuchGesamt Index_anzeigen(Index index)
         {
             HaushaltsbuchRechner rechner = new HaushaltsbuchRechner();
             var datum = rechner.DatumErmitteln(index);

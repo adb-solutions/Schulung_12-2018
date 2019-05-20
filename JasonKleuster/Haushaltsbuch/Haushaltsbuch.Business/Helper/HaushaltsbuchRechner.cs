@@ -13,17 +13,33 @@ namespace Haushaltsbuch.Business
     {
         public decimal KassenbestandBerechnen(List<Transaktion> transaktionen)
         {
-            return 1;
+            decimal bestand = 0;
+
+            foreach (var transaktion in transaktionen)
+            {
+                bestand = bestand + transaktion.Wert;
+            }
+
+            return bestand;
         }
 
-
-
-
-        public List<Kategorie> KategorienGesamtbetraegeBerechnen(List<Transaktion> transaktion)
+        public List<Kategorie> KategorienGesamtbetraegeBerechnen(List<Transaktion> transaktionen)
         {
             List<Kategorie> kategorien = new List<Kategorie>();
 
-            
+            foreach (var transaktion in transaktionen)
+            {
+                if (kategorien.Any(li => li.Equals(transaktion.Kategorie)))
+                {
+                    var kategorie = kategorien.Find(li => li.Bezeichnung.Equals(transaktion.Kategorie));
+                    kategorie.Gesamtbetrag = kategorie.Gesamtbetrag + transaktion.Wert;
+                }
+                else
+                {
+                    Kategorie kategorie = new Kategorie(transaktion.Kategorie, transaktion.Wert);
+                    kategorien.Add(kategorie);
+                }
+            }
 
             return kategorien;
         }
@@ -43,7 +59,7 @@ namespace Haushaltsbuch.Business
             return datum;
         }
 
-        public decimal KategorieGesamtbetragBerechnen(object transaktionen)
+        public decimal KategorieGesamtbetragBerechnen(Transaktion transaktionen)
         {
             throw new NotImplementedException();
         }
