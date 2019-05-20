@@ -14,16 +14,16 @@ namespace Haushaltsbuch.Business.Tests
     class ArgumentVerarbeiterTests
     {
         [Test]
-        [Ignore("Skip, dient nur zu Anschauung von DateTime.TryParse Problem")]
+        //[Ignore("Skip, dient nur zu Anschauung von DateTime.TryParse Problem")]
         public void DateTime_TryParse_String_228_komma_02_zu_DateTime_Erwarte_Fehlgeschlagen()
         {
             DateTime datum;
             bool parsenErfolgreich = DateTime.TryParse("228,02", out datum);
-            Assert.False(parsenErfolgreich);
+            Assert.True(parsenErfolgreich); //Sollte eigentlich False sein, jedoch interpretiert das Framework das Datum falsch
         }
 
         [Test]
-        [Ignore("Skip, dient nur zu Anschauung von DateTime.TryParse Problem")]
+        //[Ignore("Skip, dient nur zu Anschauung von DateTime.TryParse Problem")]
         public void DateTime_TryParseExact_String_228_komma_02_zu_DateTime_Erwarte_Fehlgeschlagen()
         {
             string[] unterstuetze_EingabeDatumsformate = {"dd.MM.yyyy"};
@@ -48,9 +48,12 @@ namespace Haushaltsbuch.Business.Tests
         [Test]
         public void Ist_Uebersicht_Kommando_Erwarte_uebersicht_und_kuerzeres_args()
         {
+            bool wasCalled = false;
+
             ArgumentVerarbeiter.Ist_Uebersicht_Kommando(new string[] { "übersicht", "12", "2019" }, 
                 onIstUebersicht: (argsUebersicht) =>
                 {
+                    wasCalled = true;
                     Assert.That(argsUebersicht, Is.EqualTo(new string[] { "12", "2019" }));
                 }, 
                 onIstEinAuszahlung: (argsEinAuszahlung) =>
@@ -58,6 +61,8 @@ namespace Haushaltsbuch.Business.Tests
                     Assert.Fail("Ein-/Auszahlung erkannt");
                 }
             );
+
+            Assert.True(wasCalled);
         }
 
         [Test]

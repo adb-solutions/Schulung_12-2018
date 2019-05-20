@@ -41,7 +41,7 @@ namespace Haushaltsbuch.Persistence.Tests
                 Betrag = new Money(0.01),
                 Kategorie = demoKat
             };
-            _repository.Add_und_Speichern(neuerEintrag);
+            _repository.Datensatz_hinzufuegen(neuerEintrag);
 
             _repository.Kategorie_existiert(demoKat, () =>
             {
@@ -74,7 +74,7 @@ namespace Haushaltsbuch.Persistence.Tests
                 Datum = DateTime.Now,
                 Betrag = new Money(0.01)
             };
-            _repository.Add_und_Speichern(neuerEintrag);
+            _repository.Datensatz_hinzufuegen(neuerEintrag);
 
 
             string[] datensaetze = File.ReadAllLines(_testDatenbank);
@@ -90,7 +90,7 @@ namespace Haushaltsbuch.Persistence.Tests
                 Datum = DateTime.Now,
                 Betrag = new Money(0.01)
             };
-            _repository.Add_und_Speichern(neuerEintrag);
+            _repository.Datensatz_hinzufuegen(neuerEintrag);
 
             var transaktionen = _repository.Lade();
 

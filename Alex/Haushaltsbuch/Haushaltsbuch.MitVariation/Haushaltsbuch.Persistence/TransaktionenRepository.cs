@@ -31,7 +31,7 @@ namespace Haushaltsbuch.Persistence
             }
         }
 
-        public void Add_und_Speichern(Transaktion transaktion)
+        public void Datensatz_hinzufuegen(Transaktion transaktion)
         {
             string jsonString = JsonConvert.SerializeObject(transaktion);
             File.AppendAllLines(_datenbank, new string[] { jsonString });
