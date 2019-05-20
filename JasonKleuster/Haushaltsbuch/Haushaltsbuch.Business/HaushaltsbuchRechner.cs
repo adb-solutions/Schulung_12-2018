@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Haushaltsbuch.Persistence;
 using Haushaltsbuch.Shared;
 using Haushaltsbuch.Shared.BusinessModels;
 
@@ -11,7 +12,7 @@ namespace Haushaltsbuch.Business
 {
     public class HaushaltsbuchRechner
     {
-        public decimal KassenbestandBerechnen(List<Transaktion> transaktionen)
+        public decimal Kassenbestand_berechnen(List<Transaktion> transaktionen)
         {
             decimal bestand = 0;
 
@@ -23,7 +24,7 @@ namespace Haushaltsbuch.Business
             return bestand;
         }
 
-        public List<Kategorie> KategorienGesamtbetraegeBerechnen(List<Transaktion> transaktionen)
+        public List<Kategorie> Kategorien_Gesamtbetraege_berechnen(List<Transaktion> transaktionen)
         {
             List<Kategorie> kategorien = new List<Kategorie>();
 
@@ -45,7 +46,7 @@ namespace Haushaltsbuch.Business
         }
 
 
-        public DateTime DatumErmitteln(Index index)
+        public DateTime Datum_ermitteln(Index index)
         {
             DateTimeFormatInfo info = new DateTimeFormatInfo();
 
@@ -59,9 +60,28 @@ namespace Haushaltsbuch.Business
             return datum;
         }
 
-        public decimal KategorieGesamtbetragBerechnen(Transaktion transaktionen)
+        public decimal Kategorie_Gesamtbetrag_berechnen(List<Transaktion> transaktionen)
         {
-            throw new NotImplementedException();
+            decimal gesamtbetrag = 0;
+
+            foreach (var transaktion in transaktionen)
+            {
+                gesamtbetrag = gesamtbetrag + transaktion.Wert;
+            }
+
+            return gesamtbetrag;
+        }
+
+        public decimal Kassenbestand_verringern(decimal kassenbestand, decimal betrag)
+        {
+            kassenbestand = kassenbestand - betrag;
+            return kassenbestand;
+        }
+
+        public decimal Kassenbestand_erhoehen(decimal kassenbestand, decimal betrag)
+        {
+            kassenbestand = kassenbestand + betrag;
+            return kassenbestand;
         }
     }
 }

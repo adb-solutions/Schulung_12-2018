@@ -3,6 +3,7 @@ using Haushaltsbuch.Shared;
 using Haushaltsbuch.Shared.BusinessModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,15 +19,15 @@ namespace Haushaltsbuch.Business
         {
             var verarbeiter = new ArgumentVerarbeiter();
 
-            verarbeiter.ParameterAktionBestimmen(args, 
+            verarbeiter.Parameter_Aktion_bestimmen(args, 
                 onZahlung: argumente =>
                 {
-                    var transaktion = verarbeiter.ZahlungsdatenAuslesen(argumente);
+                    var transaktion = verarbeiter.Zahlungsdaten_auslesen(argumente);
                     onZahlung(transaktion);
                 },
                 onIndex: argumente => 
                 {
-                    var index = verarbeiter.IndexdatenAuslesen(argumente);
+                    var index = verarbeiter.Indexdaten_auslesen(argumente);
                     onIndex(index);
                 });
         }
@@ -45,46 +46,76 @@ namespace Haushaltsbuch.Business
                     },
                     () => {
                         isLocked = true;
-                        locker.Warte();
+                        locker.Warten();
                     }
                 );
 
             } while (isLocked);
 
-            TransaktionenRepository repository = new TransaktionenRepository();
-            repository.Speichern(transaktion);
+            
+            TransaktionenRepository transaktionenRepository = new TransaktionenRepository();
+            KassenbestandRepository kassenbestandRepository = new KassenbestandRepository();
+            HaushaltsbuchRechner rechner = new HaushaltsbuchRechner();
 
+            decimal kassenbestand = kassenbestandRepository.Lade();
+
+            Transaktionstyp_pruefen(transaktion.Typ,
+                onEinzahlung: () =>
+                {
+                    kassenbestand = rechner.Kassenbestand_verringern(kassenbestand, transaktion.Wert);
+
+                },
+                onAuszahlung: () =>
+                {
+                    kassenbestand = rechner.Kassenbestand_erhoehen(kassenbestand, transaktion.Wert);
+                }
+            );
+
+            transaktionenRepository.Speichern(transaktion);
+            kassenbestandRepository.Speichern(kassenbestand);
             locker.Lock_beenden();
 
-            var transaktionen = repository.TransaktionenLadenByDatumAndKategorie(transaktion.Datum, transaktion.Kategorie);
-
-            HaushaltsbuchRechner rechner = new HaushaltsbuchRechner();
-            var gesamtbetrag = rechner.KategorieGesamtbetragBerechnen(transaktionen);
+            var transaktionen = transaktionenRepository.Transaktionen_laden_by_Datum_and_Kategorie(transaktion.Datum, transaktion.Kategorie);
+            var gesamtbetrag = rechner.Kategorie_Gesamtbetrag_berechnen(transaktionen);
 
             Kategorie kategorie = new Kategorie(transaktion.Kategorie, gesamtbetrag);
+            HaushaltsbuchEinzeln dtoModel = new HaushaltsbuchEinzeln(kassenbestand, kategorie, transaktion.Typ);
 
-
-            var kassenbestand = rechner.KassenbestandBerechnen(transaktionen);
-
-            HaushaltsbuchEinzeln dtoModel = new HaushaltsbuchEinzeln(kassenbestand, kategorie);
-
-            return null;
+            return dtoModel;
         }
 
         public HaushaltsbuchGesamt Index_anzeigen(Index index)
         {
             HaushaltsbuchRechner rechner = new HaushaltsbuchRechner();
-            var datum = rechner.DatumErmitteln(index);
+            var datum = rechner.Datum_ermitteln(index);
 
             TransaktionenRepository repository = new TransaktionenRepository();
-            var transaktionen = repository.TransaktionenLadenByDatum(datum);
+            var transaktionen = repository.Transaktionen_laden_by_Datum(datum);
 
-            decimal kassenbestand = rechner.KassenbestandBerechnen(transaktionen);
-            var kategorien = rechner.KategorienGesamtbetraegeBerechnen(transaktionen);
+            decimal kassenbestand = rechner.Kassenbestand_berechnen(transaktionen);
+            var kategorien = rechner.Kategorien_Gesamtbetraege_berechnen(transaktionen);
 
             HaushaltsbuchGesamt dtoModel = new HaushaltsbuchGesamt(datum, kassenbestand, kategorien);
 
             return dtoModel;
+        }
+
+        private void Transaktionstyp_pruefen(Zahlung typ, 
+            Action onEinzahlung, 
+            Action onAuszahlung)
+        {
+            if (typ == Shared.BusinessModels.Zahlung.Einzahlung)
+            {
+                onEinzahlung();
+            }
+            else if (typ == Shared.BusinessModels.Zahlung.Auszahlung)
+            {
+                onAuszahlung();
+            }
+            else
+            {
+                throw new Exception("Transaktionstyp_pruefen fehlgeschlagen.");
+            }
         }
     }
 }

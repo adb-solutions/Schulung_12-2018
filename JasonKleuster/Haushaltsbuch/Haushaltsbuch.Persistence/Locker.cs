@@ -26,14 +26,14 @@ namespace Haushaltsbuch.Persistence
 
         public void Lock_beenden()
         {
-            try
-            {
-                File.Delete(pfad);
-            }
-            catch
-            {
-                throw new Exception("Fehler - Lock_starten");
-            }
+            //try
+            //{
+            //    File.Delete(pfad);
+            //}
+            //catch
+            //{
+            //    throw new Exception("Fehler - Lock_starten");
+            //}
         }
 
         public void Check_for_locked(Action unlocked, Action locked)
@@ -52,7 +52,7 @@ namespace Haushaltsbuch.Persistence
             }
         }
 
-        public void Warte()
+        public void Warten()
         {
             Thread.Sleep(60);
         }

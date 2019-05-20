@@ -9,6 +9,12 @@ namespace Haushaltsbuch.Shared
 {
     public class HaushaltsbuchEinzeln : IHaushaltsbuch
     {
+        public HaushaltsbuchEinzeln(decimal kassenbestand, Kategorie kategorie)
+        {
+            Kassenbestand = kassenbestand;
+            Kategorie = kategorie;
+        }
+
         public HaushaltsbuchEinzeln(decimal kassenbestand, Kategorie kategorie, Zahlung typ)
         {
             Kassenbestand = kassenbestand;

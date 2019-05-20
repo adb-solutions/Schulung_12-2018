@@ -21,7 +21,7 @@ namespace Haushaltsbuch.Tests
             var transaktion = new Transaktion();
 
             ArgumentVerarbeiter verarbeiter = new ArgumentVerarbeiter();
-            verarbeiter.ParameterDatumAuslesen(inputArgs, transaktion);
+            verarbeiter.Parameter_Datum_auslesen(inputArgs, transaktion);
 
             Assert.That(transaktion.Datum, Is.EqualTo(DateTime.Parse((erwartet))));
         }
@@ -37,7 +37,7 @@ namespace Haushaltsbuch.Tests
             var transaktion = new Transaktion();
 
             ArgumentVerarbeiter verarbeiter = new ArgumentVerarbeiter();
-            verarbeiter.ParameterDatumAuslesen(inputArgs, transaktion);
+            verarbeiter.Parameter_Datum_auslesen(inputArgs, transaktion);
 
             Assert.That(transaktion.Datum.Year, Is.EqualTo(DateTime.Now.Year));
             Assert.That(transaktion.Datum.Month, Is.EqualTo(DateTime.Now.Month));

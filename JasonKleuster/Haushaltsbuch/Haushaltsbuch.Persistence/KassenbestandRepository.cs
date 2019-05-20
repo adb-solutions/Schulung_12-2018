@@ -15,25 +15,35 @@ namespace Haushaltsbuch.Persistence
         {
             try
             {
+                File.AppendAllText(pfad, "0");
+
+                string kassenbestand;
+
+                using (StreamReader streamReader = File.OpenText(pfad))
+                {
+                    kassenbestand = streamReader.ReadLine();
+                }
+                
+                return Convert.ToDecimal(kassenbestand);
+            }
+            catch
+            {
+                throw new Exception("Fehler - Kassenbestand auslesen");
+            }
+        }
+
+        public void Speichern(decimal kassenbestand)
+        {
+            try
+            {
                 if (File.Exists(pfad))
                 {
-                    using (FileStream fs = File.Create(pfad))
+                    using (FileStream fileStream = File.Create(pfad))
                     {
-                        Byte[] info = new UTF8Encoding(true).GetBytes("This is some text in the file.");
-                        fs.Write(info, 0, info.Length);
+                        Byte[] info = new UTF8Encoding(true).GetBytes(kassenbestand.ToString("0.00"));
+                        fileStream.Write(info, 0, info.Length);
                     }
                 }
-
-                using (StreamReader sr = File.OpenText(pfad))
-                {
-                    string s = "";
-                    while ((s = sr.ReadLine()) != null)
-                    {
-                        Console.WriteLine(s);
-                    }
-                }
-
-                return null;
             }
             catch
             {
