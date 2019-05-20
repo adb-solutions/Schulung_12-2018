@@ -48,13 +48,13 @@ namespace Haushaltsbuch.Shared.Tests
         {
             var wert = TransaktionTyp.Einzahlung;
 
+            bool ausgefuehrt = false;
             TransaktionTypKonvertierer.Ermittle_Typ(wert, () =>
             {
-                Assert.Pass();
-            }, istAuszahlung: () =>
-            {
-                Assert.Fail("Auszahlung erkannt");
-            });
+                ausgefuehrt = true;
+            }, null);
+
+            Assert.True(ausgefuehrt);
         }
 
         [Test]
