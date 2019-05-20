@@ -46,7 +46,7 @@ namespace Haushaltsbuch.Business
         }
 
 
-        public DateTime DatumErmitteln(Index index)
+        public DateTime Datum_ermitteln(Index index)
         {
             DateTimeFormatInfo info = new DateTimeFormatInfo();
 

@@ -9,43 +9,43 @@ namespace Haushaltsbuch.KonsoleUi
 {
     public class KonsoleDesign
     {
-        public void EinzahlungAnzeigen(HaushaltsbuchEinzeln viewModel)
+        public void Einzahlung_anzeigen(HaushaltsbuchEinzeln viewModel)
         {
             Console.WriteLine();
-            AttributAnzeigen("Kassenbestand", viewModel.Kassenbestand.ToString());
+            Attribut_anzeigen("Kassenbestand", viewModel.Kassenbestand.ToString());
 
             Console.ReadKey();
         }
 
-        public void AuszahlungAnzeigen(HaushaltsbuchEinzeln viewModel)
+        public void Auszahlung_anzeigen(HaushaltsbuchEinzeln viewModel)
         {
             Console.WriteLine();
-            AttributAnzeigen("Kassenbestand", viewModel.Kassenbestand.ToString());
-            AttributAnzeigen(viewModel.Kategorie.Bezeichnung, viewModel.Kategorie.Gesamtbetrag.ToString());
+            Attribut_anzeigen("Kassenbestand", viewModel.Kassenbestand.ToString());
+            Attribut_anzeigen(viewModel.Kategorie.Bezeichnung, viewModel.Kategorie.Gesamtbetrag.ToString());
 
             Console.ReadKey();
         }
 
-        public void IndexAnzeigen(HaushaltsbuchGesamt viewModel)
+        public void Index_anzeigen(HaushaltsbuchGesamt viewModel)
         {
             Console.WriteLine();
-            MonatJahrAnzeigen(viewModel.Monat, viewModel.Jahr);
-            AttributAnzeigen("Kassenbestand", viewModel.Kassenbestand.ToString());
+            Monat_und_Jahr_anzeigen(viewModel.Monat, viewModel.Jahr);
+            Attribut_anzeigen("Kassenbestand", viewModel.Kassenbestand.ToString());
 
             foreach (var kategorie in viewModel.Kategorien)
             {
-                AttributAnzeigen(kategorie.Bezeichnung, kategorie.Gesamtbetrag.ToString());
+                Attribut_anzeigen(kategorie.Bezeichnung, kategorie.Gesamtbetrag.ToString());
             }
 
             Console.ReadKey();
         }
 
-        private void AttributAnzeigen(string bezeichnung, string wert)
+        private void Attribut_anzeigen(string bezeichnung, string wert)
         {
             Console.WriteLine($"{bezeichnung}: {wert}");
         }
 
-        private void MonatJahrAnzeigen(string monat, string jahr)
+        private void Monat_und_Jahr_anzeigen(string monat, string jahr)
         {
             Console.WriteLine($"{monat} {jahr}");
             Console.WriteLine($"---------------------------");

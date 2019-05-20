@@ -19,15 +19,15 @@ namespace Haushaltsbuch.Business
         {
             var verarbeiter = new ArgumentVerarbeiter();
 
-            verarbeiter.ParameterAktionBestimmen(args, 
+            verarbeiter.Parameter_Aktion_bestimmen(args, 
                 onZahlung: argumente =>
                 {
-                    var transaktion = verarbeiter.ZahlungsdatenAuslesen(argumente);
+                    var transaktion = verarbeiter.Zahlungsdaten_auslesen(argumente);
                     onZahlung(transaktion);
                 },
                 onIndex: argumente => 
                 {
-                    var index = verarbeiter.IndexdatenAuslesen(argumente);
+                    var index = verarbeiter.Indexdaten_auslesen(argumente);
                     onIndex(index);
                 });
         }
@@ -46,7 +46,7 @@ namespace Haushaltsbuch.Business
                     },
                     () => {
                         isLocked = true;
-                        locker.Warte();
+                        locker.Warten();
                     }
                 );
 
@@ -87,7 +87,7 @@ namespace Haushaltsbuch.Business
         public HaushaltsbuchGesamt Index_anzeigen(Index index)
         {
             HaushaltsbuchRechner rechner = new HaushaltsbuchRechner();
-            var datum = rechner.DatumErmitteln(index);
+            var datum = rechner.Datum_ermitteln(index);
 
             TransaktionenRepository repository = new TransaktionenRepository();
             var transaktionen = repository.Transaktionen_laden_by_Datum(datum);

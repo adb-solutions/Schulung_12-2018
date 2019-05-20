@@ -12,7 +12,7 @@ namespace Haushaltsbuch.Business
 {
     public class ArgumentVerarbeiter
     {
-        public void ParameterAktionBestimmen(string[] args, 
+        public void Parameter_Aktion_bestimmen(string[] args, 
             Action<string[]> onZahlung, 
             Action<string[]> onIndex)
         {
@@ -32,19 +32,19 @@ namespace Haushaltsbuch.Business
             }
         }
 
-        public Transaktion ZahlungsdatenAuslesen(string[] args)
+        public Transaktion Zahlungsdaten_auslesen(string[] args)
         {
-            var values = ParametAktionAuslesenUndTransaktionErstellen(args);
-            values = ParameterDatumAuslesen(values.Item1, values.Item2);
-            values = ParameterBetragAuslesen(values.Item1, values.Item2);
-            values = ParameterKategorieAuslesen(values.Item1, values.Item2); 
-            var result = ParameterMemoAuslesen(values.Item1, values.Item2); 
+            var values = Paramet_Aktion_auslesen_und_Transaktion_erstellen(args);
+            values = Parameter_Datum_auslesen(values.Item1, values.Item2);
+            values = Parameter_Betrag_auslesen(values.Item1, values.Item2);
+            values = Parameter_Kategorie_auslesen(values.Item1, values.Item2); 
+            var result = Parameter_Memo_auslesen(values.Item1, values.Item2); 
 
             return result;
         }
 
         // ZahlungsdatenAuslesen
-        private Tuple<string[], Transaktion> ParametAktionAuslesenUndTransaktionErstellen(string[] args)
+        private Tuple<string[], Transaktion> Paramet_Aktion_auslesen_und_Transaktion_erstellen(string[] args)
         {
             Transaktion transaktion = new Transaktion();
 
@@ -61,7 +61,7 @@ namespace Haushaltsbuch.Business
         }
 
         // ZahlungsdatenAuslesen
-        internal Tuple<string[], Transaktion> ParameterDatumAuslesen(string[] args, Transaktion transaktion)
+        internal Tuple<string[], Transaktion> Parameter_Datum_auslesen(string[] args, Transaktion transaktion)
         {
             string[] argsResult = args;
 
@@ -81,7 +81,7 @@ namespace Haushaltsbuch.Business
         }
 
         // ZahlungsdatenAuslesen
-        private Tuple<string[], Transaktion> ParameterBetragAuslesen(string[] args, Transaktion transaktion)
+        private Tuple<string[], Transaktion> Parameter_Betrag_auslesen(string[] args, Transaktion transaktion)
         {
             decimal betrag = decimal.Parse(args.First());
             transaktion.Wert = betrag;
@@ -90,7 +90,7 @@ namespace Haushaltsbuch.Business
         }
 
         // ZahlungsdatenAuslesen
-        private Tuple<string[], Transaktion> ParameterKategorieAuslesen(string[] args, Transaktion transaktion)
+        private Tuple<string[], Transaktion> Parameter_Kategorie_auslesen(string[] args, Transaktion transaktion)
         {
             if (args != null && args.Any())
             {
@@ -102,7 +102,7 @@ namespace Haushaltsbuch.Business
         }
 
         // ZahlungsdatenAuslesen
-        private Transaktion ParameterMemoAuslesen(string[] args, Transaktion transaktion)
+        private Transaktion Parameter_Memo_auslesen(string[] args, Transaktion transaktion)
         {
             if (args != null && args.Any())
             {
@@ -115,17 +115,17 @@ namespace Haushaltsbuch.Business
 
 
 
-        public Index IndexdatenAuslesen(string[] args)
+        public Index Indexdaten_auslesen(string[] args)
         {
-            var values = ParameterMonatAuslesenUndIndexErstellen(args);
-            var result = ParameterJahrAuslesen(values.Item1, values.Item2);
+            var values = Parameter_Monat_auslesen_und_Index_erstellen(args);
+            var result = Parameter_Jahr_auslesen(values.Item1, values.Item2);
 
 
             return result;
         }
 
         // ZahlungsdatenAuslesen
-        private Tuple<Index, string[]> ParameterMonatAuslesenUndIndexErstellen(string[] args)
+        private Tuple<Index, string[]> Parameter_Monat_auslesen_und_Index_erstellen(string[] args)
         {
             Index index = new Index();
 
@@ -140,7 +140,7 @@ namespace Haushaltsbuch.Business
         }
 
         // ZahlungsdatenAuslesen
-        private Index ParameterJahrAuslesen(Index index, string[] args)
+        private Index Parameter_Jahr_auslesen(Index index, string[] args)
         {
             if (args != null && args.Any())
             {

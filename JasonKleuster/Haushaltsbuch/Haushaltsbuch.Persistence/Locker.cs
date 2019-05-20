@@ -52,7 +52,7 @@ namespace Haushaltsbuch.Persistence
             }
         }
 
-        public void Warte()
+        public void Warten()
         {
             Thread.Sleep(60);
         }

@@ -17,29 +17,29 @@ namespace Haushaltsbuch.KonsoleUi
             HaushaltsbuchInteraktionen interaktion = new HaushaltsbuchInteraktionen();
             KonsoleDesign view = new KonsoleDesign();
 
-            //string[] test = new string[] { "einzahlung", "13,99" };
-            //string[] test = new string[] { "auszahlung", "19.05.2019", "15,99", "Einkauf", "Schokobecher" };
-            string[] test = new string[] { "uebersicht", "Mai", "2019" };
+            //string[] argsTest = new string[] { "einzahlung", "13,99" };
+            string[] argsTest = new string[] { "auszahlung", "19.05.2019", "15,99", "Einkauf", "Schokobecher" };
+            //string[] argsTest = new string[] { "uebersicht", "Mai", "2019" };
 
-            interaktion.Start(test, 
+            interaktion.Start(argsTest, 
                 onZahlung: transaktion =>
                 {
                     var dtoModel = interaktion.Zahlung(transaktion);
 
                     if (dtoModel.Typ == Zahlung.Einzahlung)
                     {
-                        view.EinzahlungAnzeigen(dtoModel);
+                        view.Einzahlung_anzeigen(dtoModel);
                     }
                     else if (dtoModel.Typ == Zahlung.Auszahlung)
                     {
-                        view.AuszahlungAnzeigen(dtoModel);
+                        view.Auszahlung_anzeigen(dtoModel);
                     }
                 },
                 onIndex: index =>
                 {
                     var dtoModel = interaktion.Index_anzeigen(index);
 
-                    view.IndexAnzeigen(dtoModel);
+                    view.Index_anzeigen(dtoModel);
                 }
             );
         }
