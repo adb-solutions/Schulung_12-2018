@@ -40,7 +40,7 @@ namespace Haushaltsbuch.Business.Tests
         }
 
         [Test]
-        [TestCase("2019-05-10", new[] { "Miete;30" })]
+        [TestCase("2019-05-10", new[] { "Miete;30", "Restaurantbesuche;20" })]
         public void Ermittle_alle_Kategorien_Erwarte_Erfolg(string datumString, string[] erwarteteKategorien)
         {
             DateTime datum = DateTime.Parse(datumString);
@@ -75,7 +75,7 @@ namespace Haushaltsbuch.Business.Tests
             List<Kategorie> ermittelteKategorien = Summierer.Ermittle_alle_Kategorien(datum, transaktionen);
             foreach(Kategorie kategorie in ermittelteKategorien)
             {
-                var erwartet = erwarteteKategorien.FirstOrDefault(li => li.Equals(kategorie.Bezeichnung));
+                var erwartet = erwarteteKategorien.FirstOrDefault(li => li.StartsWith(kategorie.Bezeichnung, StringComparison.CurrentCultureIgnoreCase));
                 if(erwartet == null)
                 {
                     Assert.Fail("Kategorie " + kategorie.Bezeichnung + " nicht in Erwartet-Array gefunden");

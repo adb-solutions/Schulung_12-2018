@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
+
 namespace Haushaltsbuch.Shared
 {
     public static class TransaktionTypKonvertierer
@@ -39,6 +41,10 @@ namespace Haushaltsbuch.Shared
             else if (typ == TransaktionTyp.Auszahlung)
             {
                 istAuszahlung();
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("Transaktiontyp");
             }
         }
     }

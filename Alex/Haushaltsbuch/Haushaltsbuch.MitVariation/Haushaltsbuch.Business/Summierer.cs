@@ -38,7 +38,7 @@ namespace Haushaltsbuch.Business
                                                             transaktion.Datum.Month == datum.Month &&
                                                             transaktion.Datum.Year == datum.Year &&
 
-                                                            transaktion.Kategorie.Equals(kategorie, StringComparison.OrdinalIgnoreCase));
+                                                            transaktion.Kategorie.Equals(kategorie, StringComparison.CurrentCultureIgnoreCase));
 
             Money summe = new Money(0);
             foreach (var elem in temp)
@@ -55,7 +55,8 @@ namespace Haushaltsbuch.Business
                                                             transaktion.Typ == TransaktionTyp.Auszahlung &&
                                                             transaktion.Datum.Month == datum.Month &&
                                                             transaktion.Datum.Year == datum.Year)
-                                    .GroupBy(transaktion => transaktion.Kategorie).OrderBy(li => li.Key);
+                                    .GroupBy(transaktion => transaktion.Kategorie,
+                                                StringComparer.CurrentCultureIgnoreCase).OrderBy(li => li.Key);
 
             List<Kategorie> result = new List<Kategorie>();
             foreach (var elem in temp)
