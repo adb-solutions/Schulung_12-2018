@@ -48,9 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\ArgumentVerarbeiter.cs" />
+    <Compile Include="ArgumentVerarbeiter.cs" />
     <Compile Include="HaushaltsbuchInteraktionen.cs" />
-    <Compile Include="Helper\HaushaltsbuchRechner.cs" />
+    <Compile Include="HaushaltsbuchRechner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

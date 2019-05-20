@@ -79,7 +79,7 @@ namespace Haushaltsbuch.Business
             var gesamtbetrag = rechner.Kategorie_Gesamtbetrag_berechnen(transaktionen);
 
             Kategorie kategorie = new Kategorie(transaktion.Kategorie, gesamtbetrag);
-            HaushaltsbuchEinzeln dtoModel = new HaushaltsbuchEinzeln(kassenbestand, kategorie);
+            HaushaltsbuchEinzeln dtoModel = new HaushaltsbuchEinzeln(kassenbestand, kategorie, transaktion.Typ);
 
             return dtoModel;
         }
