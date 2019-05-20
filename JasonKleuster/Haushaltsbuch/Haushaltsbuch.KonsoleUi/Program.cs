@@ -15,9 +15,10 @@ namespace Haushaltsbuch.KonsoleUi
         static void Main(string[] args)
         {
             HaushaltsbuchInteraktionen interaktion = new HaushaltsbuchInteraktionen();
-            ShowDesign view = new ShowDesign();
+            KonsoleDesign view = new KonsoleDesign();
 
-            string[] argsTest = new string[] {"auszahlung", "19.05.2019", "5,99", "Restaurant", "Schokobecher"};
+            //string[] argsTest = new string[] { "auszahlung", "19.05.2019", "5,99", "Restaurant", "Schokobecher" };
+            string[] argsTest = new string[] { "uebersicht", "Mai", "2019" };
 
             interaktion.Start(argsTest, 
                 onZahlung: transaktion =>
@@ -40,6 +41,8 @@ namespace Haushaltsbuch.KonsoleUi
                     view.IndexAnzeigen(dtoModel);
                 }
             );
+
+            Console.ReadKey();
         }
     }
 }

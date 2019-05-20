@@ -7,7 +7,7 @@ using Haushaltsbuch.Shared;
 
 namespace Haushaltsbuch.KonsoleUi
 {
-    public class ShowDesign
+    public class KonsoleDesign
     {
         public void EinzahlungAnzeigen(HaushaltsbuchEinzeln viewModel)
         {
