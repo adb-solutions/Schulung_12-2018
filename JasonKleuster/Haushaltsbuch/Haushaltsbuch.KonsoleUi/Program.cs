@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Haushaltsbuch.Shared.BusinessModels;
 
 namespace Haushaltsbuch.KonsoleUi
 {
@@ -14,22 +15,33 @@ namespace Haushaltsbuch.KonsoleUi
         static void Main(string[] args)
         {
             HaushaltsbuchInteraktionen interaktion = new HaushaltsbuchInteraktionen();
-            IHaushaltsbuch dtoModel = interaktion.Start(args);
+            KonsoleDesign view = new KonsoleDesign();
 
-            if (dtoModel.GetType() == typeof(HaushaltsbuchEinzeln))
-            {
+            //string[] argsTest = new string[] { "einzahlung", "13,99" };
+            string[] argsTest = new string[] { "auszahlung", "19.05.2019", "15,99", "Einkauf", "Schokobecher" };
+            //string[] argsTest = new string[] { "uebersicht", "Mai", "2019" };
 
-            }
-            else if (dtoModel.GetType() == typeof(HaushaltsbuchGesamt))
-            {
+            interaktion.Start(argsTest, 
+                onZahlung: transaktion =>
+                {
+                    var dtoModel = interaktion.Zahlung(transaktion);
 
-            }
-            else
-            {
-                // FEHLER
-            }
+                    if (dtoModel.Typ == Zahlung.Einzahlung)
+                    {
+                        view.Einzahlung_anzeigen(dtoModel);
+                    }
+                    else if (dtoModel.Typ == Zahlung.Auszahlung)
+                    {
+                        view.Auszahlung_anzeigen(dtoModel);
+                    }
+                },
+                onIndex: index =>
+                {
+                    var dtoModel = interaktion.Index_anzeigen(index);
 
-
+                    view.Index_anzeigen(dtoModel);
+                }
+            );
         }
     }
 }

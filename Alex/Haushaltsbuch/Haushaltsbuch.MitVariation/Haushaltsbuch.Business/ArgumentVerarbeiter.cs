@@ -51,7 +51,7 @@ namespace Haushaltsbuch.Business
 
         internal static int Ermittle_Jahr(string[] args)
         {
-            if (args != null && args.Any())
+            if (args.Any())
             {
                 int jahr = int.Parse(args.First());
 
@@ -63,13 +63,13 @@ namespace Haushaltsbuch.Business
 
         internal static Tuple<int, string[]> Ermittle_Monat(string[] args)
         {
-            if(args != null && args.Any())
+            if(args.Any())
             {
                 int monat = int.Parse(args.First());
                 return new Tuple<int, string[]>(monat, args.Skip(1).ToArray());
             }
 
-            return new Tuple<int, string[]>(DateTime.Now.Month, null);
+            return new Tuple<int, string[]>(DateTime.Now.Month, new string[0]);
         }
         
         internal static Tuple<Transaktion, string[]> Erstelle_Transaktion_aus_Typ(string[] args)

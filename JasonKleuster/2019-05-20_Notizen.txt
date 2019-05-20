@@ -1,0 +1,6 @@
+Schulung am 20.05.2019
+======================
+
+ - Aufteilen von Pfeilen in mehrere Methoden -> Rechteck weggelassen und aus ein Pfeil in zwei Pfeile aufteilen
+ - Durchschleppen von Parametern mit Pfeil -> Rechteck weglassen und mit / ersetzen
+ - Im FlowDesign keine Abhängigkeiten zu Frameworks erstellen

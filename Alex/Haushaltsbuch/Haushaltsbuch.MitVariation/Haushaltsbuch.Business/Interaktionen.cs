@@ -72,7 +72,7 @@ namespace Haushaltsbuch.Business
 
         private void Transaktion_durchfuehren(Transaktion transaktion, Action<Money, Kategorie> onErfolg)
         {
-            _repository.Add_und_Speichern(transaktion);
+            _repository.Datensatz_hinzufuegen(transaktion);
 
             List<Transaktion> alleTranskationen = _repository.Lade();
             Money kassenbestand = Summierer.Ermittle_Kassenbestand(transaktion.Datum, alleTranskationen);
