@@ -34,17 +34,16 @@ namespace Haushaltsbuch.Shared
 
         public static void Ermittle_Typ(TransaktionTyp typ, Action istEinzahlung, Action istAuszahlung)
         {
-            if (typ == TransaktionTyp.Einzahlung)
+            switch (typ)
             {
-                istEinzahlung();
-            }
-            else if (typ == TransaktionTyp.Auszahlung)
-            {
-                istAuszahlung();
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("Transaktiontyp");
+                case TransaktionTyp.Einzahlung:
+                    istEinzahlung();
+                    break;
+                case TransaktionTyp.Auszahlung:
+                    istAuszahlung();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Transaktiontyp");
             }
         }
     }
